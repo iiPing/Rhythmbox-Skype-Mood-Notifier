@@ -1,2 +1,61 @@
-README FIRST !!!
+Contents:
+  About
+  Features
+  Compatibility List
+  Installation
+  Help
 
+About
+-----
+Rhythmbox Skype Mood Notifier - is a rhythmbox plugin that updates 
+Skype mood text (in artist - title format) from current playing song/music 
+
+Features
+--------
+v0.01
+- updates mood from local playing music
+- updates mood from streaming / shoutcast
+
+Compatibility List
+------------------
+Ubuntu 9.04 - Linux 2.6.28-14-generic #47-Ubuntu SMP Sat Jul 25 01:19:55 UTC 2009 x86_64 GNU/Linux
+Rhythmbox version 0.12.0
+Skype (tm) version 2.0.0.72 x86_64
+
+
+Installation
+------------
+Pre-req:
+  python dbus
+  python 2.5 or greater (NOTE: not yet tested on python 3.0)
+  installed skype
+  installed rhythmbox
+
+-download project via tar or zip on http://github.com/iiPing/Rhythmbox-Skype-Mood-Notifier/tree/master
+-extract files
+-open terminal do the ff. below
+  cd <extracted-folder>
+  chmod a+x install.sh
+  sh install.sh
+-open skype
+-open rhythmbox
+-on rhythmbox go to edit->plugins
+-check Skype Mood Notifier
+
+
+Help
+----
+If you have installed and its running on your desktop pls. email me your system with the following
+information :
+platform (operating system running) / Desktop /rhythmbox version / skype version
+
+I'll update this readme file for compatibility list together with your name on credits ^_^
+
+
+Pls. email me at dbx0001 ( at ) gmail [dot] com 
+for purpose(s):
+  compatibility list
+  bug reports
+  request features
+
+  
