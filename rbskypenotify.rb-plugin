@@ -1,0 +1,10 @@
+[RB Plugin]
+Loader=python
+Module=rbskypemoodnotify
+IAge=1
+Name=Skype Mood Notifier
+Description=Change the Skype Mood Text from a current playing song artist - title in Rhythmbox .. 
+Authors=Christopher Gabijan
+Copyright=Copylefted 2009 Christopher Gabijan
+Website=http://some.website/
+
