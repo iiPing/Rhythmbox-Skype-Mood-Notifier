@@ -12,6 +12,9 @@ Skype mood text (in artist - title format) from current playing song/music
 
 Features
 --------
+v0.2
+- pause / resume Rhythmbox if there is a call
+
 v0.01
 - updates mood from local playing music
 - updates mood from streaming / shoutcast
