@@ -60,7 +60,7 @@ class SkypeRhythmboxMediator():
   ''' a mediator for skype and rhythmbox 
   '''
 
-  def __init__(self,cbmRBPause,cbmRBPlay,cbmRBIsPlaying):
+  def __init__(self,cbmRBPause,cbmRBPlay,cbmRBIsPlaying,pauseMessage='(music - paused)'):
     DBusGMainLoop(set_as_default=True)
     self.bus = None
     self.RBPause = cbmRBPause
@@ -73,7 +73,7 @@ class SkypeRhythmboxMediator():
     self.skype_listener = None
     self.connected = False
     self.protSupported = False
-
+    self.pauseMessage = pauseMessage
 
   def hook(self):
     self.bus = dbus.SessionBus()
@@ -108,8 +108,7 @@ class SkypeRhythmboxMediator():
       self.skype_listener = None
     self.connected = False
     self.protSupported = False
-    self.rbWasPlaying = False
-    self.oldSongTitle = None
+
 
 
   def SKNotifyListener(self, cmdStr):
@@ -122,21 +121,22 @@ class SkypeRhythmboxMediator():
             self.rbWasPlaying = True
             self.RBPause()
             self.oldSongTitle = self.SKGetMood()
-            self.SKSetMood('music - paused')
+            self.SKSetMood(self.pauseMessage)
         elif (cmdStrArr[3] in SKYPE_CALL_END) :
           if self.rbWasPlaying :
             self.rbWasPlaying  = False
-            self.SKSetMood(self.oldSongTitle)
+            if self.oldSongTitle : self.SKSetMood(self.oldSongTitle)
             self.RBPlay()
         gtk.gdk.threads_leave()
 
 
   def SKLoginLogout(self, name, oldAddress, newAddress):
-    print "login-logout %s %s %s", (name,oldAddress,newAddress)
     self.cleanRef()
     self.connect()
 
   def SKSetMood(self,mood_msg):
+    self.cleanRef()
+    self.connect()
     retry = 3
     while (retry != 0):
       retry = retry - 1
@@ -150,8 +150,10 @@ class SkypeRhythmboxMediator():
 
 
   def SKGetMood(self):
+    self.cleanRef()
+    self.connect()
     retry = 3
-    mood_msg = ''
+    mood_msg = None
     while (retry != 0):
       retry = retry - 1
       try:
@@ -159,16 +161,16 @@ class SkypeRhythmboxMediator():
           mood_msg = self.skype_api.Invoke('%s' % SKYPE_CMD_DICT.get('GetMood'))
           if mood_msg.startswith('GET PROFILE RICH_MOOD_TEXT') :
             tmp = mood_msg[27:]
-            mood_msg = tmp
+            mood_msg = str(tmp)
           elif mood_msg.startswith('PROFILE RICH_MOOD_TEXT') :
             tmp = mood_msg[23:]
-            mood_msg = tmp
+            mood_msg = str(tmp)
 
         break
       except:
         self.cleanRef()
         self.connect()
-    return str(mood_msg)
+    return mood_msg
 
 
   def isSkypeRunning(self):
@@ -188,5 +190,7 @@ class SkypeRhythmboxMediator():
     if self.skype_stat: 
       self.skype_stat.remove()
       self.skype_stat = None
+    self.pauseMessage = None
+    self.oldSongTitle = None
 
 
