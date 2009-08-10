@@ -17,7 +17,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import rhythmdb, rb
-from DBusSkype import DBusSkype
+from DBusSkype import SkypeRhythmboxMediator
 
 STRM_SONG_ARTIST = 'rb:stream-song-artist'
 STRM_SONG_TITLE  = 'rb:stream-song-title'
@@ -30,26 +30,48 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
   def __init__(self):
     rb.Plugin.__init__(self)
 
+
   def activate(self, shell):
-    self.skype = DBusSkype()
-    self.old_mood_msg = self.skype.getStatus()
+    self.old_mood_msg = None
     self.shell = shell
-    player = shell.get_player()
-    self.psc_id = player.connect('playing-song-changed', self.song_changed)
-    self.pspc_id = player.connect('playing-song-property-changed', self.song_property_changed)
+    self.player = shell.get_player()
+    self.skype = SkypeRhythmboxMediator(self.player.pause,self.player.play,self.isPlayerPlaying)
+    self.skype.hook()
+    self.old_mood_msg = self.skype.SKGetMood()
+    print "getting old mood message %s" % self.old_mood_msg
+    self.psc_id = self.player.connect('playing-song-changed', self.song_changed)
+    self.pspc_id = self.player.connect('playing-song-property-changed', self.song_property_changed)
 
 
   def deactivate(self,shell):
     if(self.old_mood_msg):
-      self.skype.setStatus(self.old_mood_msg)
+      print "setting back old mood message %s" % self.old_mood_msg
+      self.skype.SKSetMood(self.old_mood_msg)
+      self.old_mood_msg = None
+
+    if(self.skype): self.skype.unhook()
+    if(self.player): self.player = None
     self.shell.get_player().disconnect (self.psc_id)
     self.shell.get_player().disconnect (self.pspc_id)
     del self.old_mood_msg
     del self.pspc_id
     del self.psc_id
     del self.shell
+    del self.player
     del self.skype
 
+  def playerPlay(self):
+    player= self.shell.get_player()
+    if(player): player.play()
+
+  def playerPause(self):
+    player= self.shell.get_player()
+    if(player): player.pause()
+
+  def isPlayerPlaying(self):
+    player= self.shell.get_player()
+    if(player):
+      return player.props.playing
 
   def song_changed(self, player, entry):
    db = self.shell.get_property('db')
@@ -75,18 +97,17 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
       artist = db.entry_get(entry, rhythmdb.PROP_ARTIST)
       title = db.entry_get(entry, rhythmdb.PROP_TITLE)
     stat = self.format_resp(artist,title)
-    self.skype.setStatus(stat)
+    self.skype.SKSetMood(stat)
     return 1
 
+
   def format_resp(self,artist,title):
-    retval = '(music) '
+    retval = '<SS type="music">(music)</SS> '
     if artist and artist != 'Unknown' : 
       retval += ' '+ artist
     if title :
       if artist and artist != 'Unknown' :
         retval += ' -'
       retval += ' '+title
-
-
     return retval
 
