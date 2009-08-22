@@ -25,7 +25,7 @@ from dbus.mainloop.glib import DBusGMainLoop
 SKYPE_API_NAME = 'com.Skype.API'
 SKYPE_API_PATH = '/com/Skype'
 SKYPE_CLIENT_PATH = '/com/Skype/Client'
-PLUGIN_NAME = 'RhythmBox-Mood-Notifier'
+PLUGIN_NAME = 'Rhythmbox-Mood-Notifier'
 
 
 SKYPE_CMD_DICT = {

@@ -16,15 +16,19 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk, gtk.glade
-import ConfigParser
+import gtk, gtk.glade, gconf
 import rhythmdb, rb
 from DBusSkype import SkypeRhythmboxMediator
 from string import Template
 
 STRM_SONG_ARTIST = 'rb:stream-song-artist'
 STRM_SONG_TITLE  = 'rb:stream-song-title'
-RSMN_CONFIG_FILENAME  = 'plugin.conf'
+
+CONF_KEY_MOOD  = '/apps/rhythmbox/plugins/rbskypemoodnotify/MoodFormat'
+CONF_KEY_PAUSE = '/apps/rhythmbox/plugins/rbskypemoodnotify/PauseMessage'
+
+CONF_VAL_DEFAULT_MOOD = '<SS type="music">d(^_^)b</SS> $TITLE - $ARTIST'
+CONF_VAL_DEFAULT_PAUSE = '<SS type="talking">\(^_^)_</SS> ...'
 
 class RhythmboxSkypeMoodNotifier(rb.Plugin):
 
@@ -41,14 +45,15 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
     self.old_mood_msg = self.skype.SKGetMood()
     self.psc_id = self.player.connect('playing-song-changed', self.song_changed)
     self.pspc_id = self.player.connect('playing-song-property-changed', self.song_property_changed)
-
+    #gui
     self.dialog = None
     self.txFormat = None
     self.txPause = None
-    self.config = ConfigParser.ConfigParser()
+    #for configuration
+    self.conf_client = gconf.client_get_default()
+    self.mood_msg = None
+    self.pause_msg = None
     self.loadConfig()
-    self.skype.pauseMessage = self.config.get('skype','pausemessage')
-
 
   def deactivate(self,shell):
     if(self.old_mood_msg):
@@ -65,11 +70,14 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
     del self.shell
     del self.player
     del self.skype
-
+    #gui
     del self.dialog
     del self.txFormat
     del self.txPause
-    del self.config
+    #for configuration
+    del self.conf_client
+    del self.mood_msg
+    del self.pause_msg
 
   def isPlayerPlaying(self):
     player= self.shell.get_player()
@@ -106,15 +114,7 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
 
 
   def format_resp(self,artist,title):
-    self.loadConfig()
-    retval = Template(self.config.get('skype','moodformat'))
-    #retval = '<SS type="music">(music)</SS> '
-    #if artist and artist != 'Unknown' : 
-    #  retval += ' '+ artist
-    #if title :
-    #  if artist and artist != 'Unknown' :
-    #    retval += ' -'
-    #  retval += ' '+title
+    retval = Template(self.mood_msg)
     return retval.substitute(TITLE=title, ARTIST=artist)
 
 
@@ -131,45 +131,48 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
       self.txFormat = gladexml.get_widget('txFormat')
       self.txPause = gladexml.get_widget('txPause')
       
-      self.loadConfig()
 
-      self.txFormat.set_text(self.config.get('skype','moodformat'))
-      self.txPause.set_text(self.config.get('skype','pausemessage'))
+
+      self.txFormat.set_text(self.mood_msg)
+      self.txPause.set_text(self.pause_msg)
 
       return self.dialog
 
-  def dumpConfigFile(self):
-    configFile = open(RSMN_CONFIG_FILENAME,'wb')
-    self.config.write(configFile)
-    configFile.close()
 
   def loadConfig(self):
-    if self.fileConfigExists() :
-      self.config.read(RSMN_CONFIG_FILENAME)
-    else :
-      #create the config and save it
-      self.config.add_section('skype')
-      self.config.set('skype','moodformat','<SS type="music">(music)</SS> $TITLE - $ARTIST')
-      self.config.set('skype','pausemessage','(music - paused)')
-      self.dumpConfigFile()
+    self.mood_msg = self.conf_client.get_string(CONF_KEY_MOOD)
+    self.pause_msg = self.conf_client.get_string(CONF_KEY_PAUSE)
+
+    if self.mood_msg is None:
+      self.conf_client.add_dir(CONF_KEY_MOOD,gconf.CLIENT_PRELOAD_NONE)
+      self.conf_client.set_string(CONF_KEY_MOOD,CONF_VAL_DEFAULT_MOOD)
+      self.mood_msg = self.conf_client.get_string(CONF_KEY_MOOD)
+
+    if self.pause_msg is None:
+      self.conf_client.add_dir(CONF_KEY_PAUSE,gconf.CLIENT_PRELOAD_NONE)
+      self.conf_client.set_string(CONF_KEY_PAUSE,CONF_VAL_DEFAULT_PAUSE)
+      self.pause_msg = self.conf_client.get_string(CONF_KEY_PAUSE)
+
+    self.skype.pauseMessage = self.pause_msg
+
+    #load listeners
+    self.conf_client.notify_add(CONF_KEY_MOOD,self.newMoodSetup)
+    self.conf_client.notify_add(CONF_KEY_PAUSE,self.newPauseSetup)
+    
+
+  def newMoodSetup(self, client, *args, **kwargs):
+    self.mood_msg = client.get_string(CONF_KEY_MOOD)
+
+  def newPauseSetup(self, client, *args, **kwargs):
+    self.pause_msg = client.get_string(CONF_KEY_PAUSE)
+    self.skype.pauseMessage = self.pause_msg
 
   def saveConfigFromDialog(self,widget):
-    self.config.set('skype','moodformat',self.txFormat.get_text())
-    self.config.set('skype','pausemessage',self.txPause.get_text())
-    self.dumpConfigFile()
-    self.skype.pauseMessage = self.txPause.get_text()
+    self.conf_client.set_string(CONF_KEY_MOOD,self.txFormat.get_text())
+    self.conf_client.set_string(CONF_KEY_PAUSE,self.txPause.get_text())
     self.dialog.hide()
 
   def hideDialog(self,widget):
     self.dialog.hide()
-
-  def fileConfigExists(self):
-    try:
-      file = open(RSMN_CONFIG_FILENAME)
-    except IOError:
-      exists = False
-    else:
-      exists = True
-    return exists
 
 
