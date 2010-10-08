@@ -23,11 +23,12 @@ from string import Template
 
 STRM_SONG_ARTIST = 'rb:stream-song-artist'
 STRM_SONG_TITLE  = 'rb:stream-song-title'
+STRM_SONG_ALBUM  = 'rb:stream-song-album'
 
 CONF_KEY_MOOD  = '/apps/rhythmbox/plugins/rbskypemoodnotify/MoodFormat'
 CONF_KEY_PAUSE = '/apps/rhythmbox/plugins/rbskypemoodnotify/PauseMessage'
 
-CONF_VAL_DEFAULT_MOOD = '<SS type="music">d(^_^)b</SS> $TITLE - $ARTIST'
+CONF_VAL_DEFAULT_MOOD = '<SS type="music">d(^_^)b</SS> $TITLE ($ALBUM) - $ARTIST'
 CONF_VAL_DEFAULT_PAUSE = '<SS type="talking">\(^_^)_</SS> ...'
 
 class RhythmboxSkypeMoodNotifier(rb.Plugin):
@@ -104,18 +105,20 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
     stream_song_title = db.entry_request_extra_metadata(entry,STRM_SONG_TITLE)
     if (stream_song_title) :
       artist = db.entry_request_extra_metadata(entry,STRM_SONG_ARTIST)
+      album = db.entry_request_extra_metadata(entry,STRM_SONG_ALBUM)
       title = stream_song_title
     else:
       artist = db.entry_get(entry, rhythmdb.PROP_ARTIST)
       title = db.entry_get(entry, rhythmdb.PROP_TITLE)
-    stat = self.format_resp(artist,title)
+      album = db.entry_get(entry,rhythmdb.PROP_ALBUM)
+    stat = self.format_resp(artist, title, album)
     self.skype.SKSetMood(stat)
     return 1
 
 
-  def format_resp(self,artist,title):
+  def format_resp(self, artist, title, album):
     retval = Template(self.mood_msg)
-    return retval.substitute(TITLE=title, ARTIST=artist)
+    return retval.substitute(TITLE=title, ARTIST=artist, ALBUM=album)
 
 
   def create_configure_dialog(self, dialog=None):

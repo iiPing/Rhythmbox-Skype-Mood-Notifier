@@ -43,7 +43,7 @@
                 <property name="max_length">75</property>
                 <property name="invisible_char">&#x25CF;</property>
                 <property name="width_chars">75</property>
-                <property name="text" translatable="yes">&lt;SS type="music"&gt;(music)&lt;/SS&gt; $TITLE - $ARTIST</property>
+                <property name="text" translatable="yes">&lt;SS type="music"&gt;(music)&lt;/SS&gt; $TITLE ($ALBUM) - $ARTIST</property>
               </widget>
               <packing>
                 <property name="position">2</property>
