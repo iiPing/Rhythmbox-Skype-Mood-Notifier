@@ -23,6 +23,7 @@ from string import Template
 
 STRM_SONG_ARTIST = 'rb:stream-song-artist'
 STRM_SONG_TITLE  = 'rb:stream-song-title'
+STRM_SONG_ALBUM  = 'rb:stream-song-album'
 
 CONF_KEY_MOOD  = '/apps/rhythmbox/plugins/rbskypemoodnotify/MoodFormat'
 CONF_KEY_PAUSE = '/apps/rhythmbox/plugins/rbskypemoodnotify/PauseMessage'
@@ -110,12 +111,12 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
       artist = db.entry_get(entry, rhythmdb.PROP_ARTIST)
       album = db.entry_get(entry, rhythmdb.PROP_ALBUM)
       title = db.entry_get(entry, rhythmdb.PROP_TITLE)
-    stat = self.format_resp(artist,title,album)
+    stat = self.format_resp(artist, title, album)
     self.skype.SKSetMood(stat)
     return 1
 
 
-  def format_resp(self,artist,title,album):
+  def format_resp(self, artist, title, album):
     retval = Template(self.mood_msg)
     return retval.substitute(TITLE=title, ARTIST=artist, ALBUM=album)
 
