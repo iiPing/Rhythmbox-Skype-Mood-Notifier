@@ -1,0 +1,241 @@
+Only useful properties and signals here please
+
+http://library.gnome.org/devel/rhythmbox/unstable/RBShellPlayer.html
+
+Signals (Events) :
+  "playing-changed"                                : Run Last
+  "playing-song-changed"                           : Run Last
+  "playing-song-property-changed"                  : Run Last
+  "playing-source-changed"                         : Run Last
+  "playing-uri-changed"                            : Run Last
+  "window-title-changed"                           : Run Last
+
+Properties (States) :
+
+  "playing"                  gboolean              : Read
+  "playing-from-queue"       gboolean              : Read
+  "source"                   RBSource*             : Read / Write
+
+
+RBSource
+  +----RBPlaylistSource
+  +----RBBrowserSource
+  +----RBImportErrorsSource
+  +----RBMissingFilesSource
+  +----RBStreamingSource
+
+http://library.gnome.org/devel/rhythmbox/unstable/RhythmDB.html
+
+
+Dev Target: Consistency on Title Artist and Album
+Version:    0.40
+
+
+As I observed that the consistency of the dbentries with respect 
+to the window title are a bit problematic. 
+
+First problem was that there are only 2 Major States on Rhythmbox 
+the {start,stop} so arguably there is no pause state and 
+it is contradictory to the plug-in which I implied there 
+was really a pause state, after digging up on the dev docs at 
+GTK, I can't seem to find it, I can go low level and get the 
+filedescriptor lookups on the current instance of the app and 
+traverse on the files via procfs which is kind of easy on C 
+but it also affect a great deal with the plug-in since it was 
+written on python in the first place and using system resource 
+lookup inside a plug-in is somewhat absurd and can tend to 
+complicated programming and introduce bugs and I don't want that 
+(a plug-in that can crash a userspace). 
+
+So a hack my dev is Ubuntu 10.04 (Lucid); Gnome 2.30.2; Rhythmbox 0.12.8
+! Hack to consistency on getting the right state and the right title !
+
+Observable States :
+-----------------------------------------------------------------
+Window Title                           |  Description
+-----------------------------------------------------------------
+Music Player                           <- Default Launch Window Title
+
+- On Local -
+
+${Artist} - ${Title}                   <- if playing and ignores None and Unknown fields
+${Artist} - ${Title} (paused)          <- if toggled the play again
+Music Player                           <- if end of playlist
+
+- On Stream -
+
+${Artist} - ${Title} (Name of Station) <- if playing and ignores None and Unknown fields
+Music Player                           <- and no pause since it just stops
+
+
+
+This seems too good to be true and a fast hack but question arises like
+1) Internationalization.. "Music Player" I guess are used for ENG based OS I don't
+   want to scrutinize any other users with their corresponding languages 
+   since even me ENG isn't my first language.
+2) Characters like '-' and '(' ')' can be used as keys and unique state-id but is
+   this true to every GTK considering someone could be running other version "packers"
+   than Ubuntu or any other Debian also there is SuSE and RH.
+
+
+So the best way to clear up the FUD which I formulated above is to reach someone from
+the IRC hoping there will be a developer online so I started at #rhythmbox @ irc.gnome.org
+
+
+iiping 18:06 :: good day everyone.. is this the right room to ask questions on rb-plugin @python	
+
+moch 18:07 :: yes	
+
+iiping 18:11 :: can anybody tell me how to determine a pause state, the doc implies there are only 2 major states stop and play	
+
+moch 18:13 :: if there is a playing entry, but rb_shell_player_get_playing return false, it is paused	
+
+iiping 18:14 :: ok, but does it include also the stop state? what I mean is on docs http://library.gnome.org/devel/rhythmbox/unstable/RBShellPlayer.html property playing is boolean 
+       18:15 :: so if a playlist literally end it stops right? but how do I really determine those 2 
+       18:16 :: is there something like if *pointer == null on dbentries this is stop and if *pointer== somethingsomething it is paused? 
+       18:17 :: in python? 
+ 
+moch 18:18 :: if there is no playing entry, it is stopped	
+
+iiping 18:18 :: ah ok thanks	
+
+moch 18:19 :: http://git.gnome.org/browse/rhythmbox/tree/plugins/mpris/rb-mpris-plugin.c#n632	
+
+iiping 18:21 :: btw is it a good idea just to use the event/signal 'window-title-changed' so that I have only 1 entry point if the playlist did change entries... so that the plugin will be a little lightweight? On personal opinion?	
+
+moch 18:21 :: no, don't use that reducing the number of signal handlers you have does not make your plugin better or more efficient or anything 
+
+18:22	:: hadess has disconnected (Remote closed the connection) 
+
+iiping 18:22 :: ok thanks a bunch
+
+
+
+So back on the drawing board and do FSM and references for the plug-in
+
+<scxml initial="stop"><!-- Simplified Rhythmbox Reference -->
+  <datamodel>
+    player = shell.get_player()
+  </datamodel>
+  <state id="stop">
+    <transition cond="player.get_playing_entry() &eq None" target="literalstop" />
+    <transition cond="player.get_playing_entry() !&eq None" target="paused" />
+    <transition target="literalstop" /> <!-- precaution if not satisfied with the transition conditions above -->
+    <state id="paused">
+      <transition event="play.from.local" target="play" />
+      <transition event="play.from.stream" target="play" />
+      <transition event="quit.clicked" target="exit" />
+    </state>
+    <state id="literalstop">
+      <transition event="play.from.local" target="play" />
+      <transition event="play.from.stream" target="play" />
+      <transition event="quit.clicked" target="exit" />
+    </state>
+  </state>
+  <state id="play">
+    <transition event="stop.from.stream target="stop" />
+    <transition event="play.from.local" target="stop" />
+    <transition event="quit.clicked" target="exit" />
+  </state>
+  <final id="exit" />
+</scxml>
+
+<scxml initial="idle"><!-- Simplified Skype5Protocol-DBUS-Mediator Reference -->
+  <state id="idle">
+    <transition event="dbus.clbk" cond="newAddr !&eq None and oldAddr &eq None" target="idle" />
+    <transition event="dbus.clbk" cond="oldAddr !&eq None and newAddr &eq None" target="exit" />
+    <transition event="skype.any" cond="CMD &eq EARLYMEDIA" target="call" />
+    <transition event="skype.any" cond="CMD &eq RINGING"    target="call" />
+    <transition event="skype.any" cond="CMD &eq ROUTING"    target="call" />
+  </state>
+  <state id="call">
+    <transition event="dbus.clbk" cond="oldAddr !&eq None and newAddr &eq None" target="exit" />
+    <transition event="skype.any" cond="CMD &eq BUSY" target="idle" />
+    <transition event="skype.any" cond="CMD &eq CANCELLED" target="idle" />
+    <transition event="skype.any" cond="CMD &eq REFUSED" target="idle" />
+    <transition event="skype.any" cond="CMD &eq FINISHED" target="idle" />
+    <transition event="skype.any" cond="CMD &eq MISSED" target="idle" />
+    <transition event="skype.any" cond="CMD &eq FAILED" target="idle" />
+  </state>
+  <final id="exit" />
+</scxml>
+
+
+<scxml initial="init"><!-- SCXML Plugin -->
+  <state id="init>
+    <onenter>
+      oldMoodMsg = skype.getmood or None
+      pauseMoodMsg = gconf.db.pausemessage
+      currentMsg = ""
+    </onenter>
+    <transition target="wait.triggered.events" />
+  </state>
+  <state id="wait.triggered.events">
+    <transition event="player.signal" cond="signal &eq playing-song-changed"          target="skype.mood.updated" />
+    <transition event="player.signal" cond="signal &eq playing-changed"               target="skype.mood.updated" />
+    <transition event="player.signal" cond="signal &eq playing-song-property-changed" target="skype.mood.updated" />
+  </state>
+  <state id="skype.mood.updated">
+    <state id="paused">
+    </state>
+    <state id="stopped">
+    </state>
+    <state id="playing">
+    </state>
+    <transition target="wait.triggered.events" />
+  </state>
+  <final id="quit">
+    <onenter>
+    </onenter>
+  </final>
+</scxml>
+
+<scxml initial="loading"> <!-- rhythmbox skype mood notify target version 0.4 fsm -->
+  <state id="loading">
+    <transition target="configure" />
+  </state>
+  <state id="idle">
+    <transition event="skype.hooking-in"   target="configure" />
+    <transition event="skype.hooking-out"  target="configure" />
+    <transition event="skype.calling"      target="player.pause" />
+    <transition event="skype.goingidle"    target="player.play" />
+    <transition event="player.playing-song-changed"	target="configure" />
+    <transition event="player.playing-song-property-changed"	target="configure" />
+  </state>
+  <state id="player.pause">
+		<transition event="player.playing" target="player.play" />
+    <transition event="player.exit" target="player.exit" />
+  </state>
+  <state id="player.play">
+    <transition target="configure" />
+  </state>  
+  <state id="configure">
+    <transition target="idle"  />
+  </state>
+  <final id="exit" />
+</scxml>
+
+
+
+//routine 
+//1 : play
+//2 : stop
+//3 : paused
+
+
+def isPaused():
+  if player.playing :
+    return 1
+  else : 
+    entry = player.get_playing_entry()
+    if entry is None :
+      return 2
+    else :
+      return 3
+
+
+>>> entry = player.get_playing_entry()
+>>> entrytype = entry.get_entry_type()
+>>> entrytype.category == rhythmdb.ENTRY_STREAM
+
+

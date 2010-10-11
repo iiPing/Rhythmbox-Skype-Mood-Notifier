@@ -112,6 +112,7 @@ class SkypeRhythmboxMediator():
 
 
   def SKNotifyListener(self, cmdStr):
+    print "debug :: remove me ::>> " + cmdStr
     if cmdStr.startswith('CALL'):
       cmdStrArr = cmdStr.split()
       if (len(cmdStrArr) == 4 and cmdStrArr[2] == 'STATUS'):
@@ -131,6 +132,11 @@ class SkypeRhythmboxMediator():
 
 
   def SKLoginLogout(self, name, oldAddress, newAddress):
+    print "debug :: SKLoginLout initiated "
+    print "debug :: name  " + name
+    print "debug :: oldAddress " + oldAddress
+    print "debug :: newAddress " + newAddress
+
     self.cleanRef()
     self.connect()
 

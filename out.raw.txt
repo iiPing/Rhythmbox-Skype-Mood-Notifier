@@ -1,0 +1,438 @@
+    """Print methods and doc strings.   
+    Takes module, class, list, dictionary, or string."""
+    methodList = [method for method in dir(object) if callable(getattr(object, method))]
+    processFunc = collapse and (lambda s: " ".join(s.split())) or (lambda s: s)
+    print "\n".join(["%s %s" %
+                      (method.ljust(spacing),
+                       processFunc(str(getattr(object, method).__doc__)))
+                     for method in methodList])
+
+
+You can access the main window through the 'shell' variable :
+<rb.Shell object at 0x3059280 (RBShell at 0x2689000)>
+>>> def info(object, spacing=10, collapse=1):
+...     """Print methods and doc strings.   
+    Takes module, class, list, dictionary, or string."""
+    methodList = [method for method in dir(object) if callable(getattr(object, method))]
+    processFunc = collapse and (lambda s: " ".join(s.split())) or (lambda s: s)
+    print "\n".join(["%s %s" %
+                      (method.ljust(spacing),
+                       processFunc(str(getattr(object, method).__doc__)))
+                     for method in methodList])
+... 
+>>> info(shell)
+__class__  Object RBShell Signals from RBShell: visibility-changed (gboolean) visibility-changing (gboolean, gboolean) -> gboolean create-song-info (RBSongInfo, gboolean) removable-media-scan-finished () notify-playing-entry (gboolean) notify-custom (guint, gchararray, gchararray, GdkPixbuf, gboolean) Properties from RBShell: no-registration -> gboolean: no-registration Whether or not to register no-update -> gboolean: no-update Whether or not to update the library dry-run -> gboolean: dry-run Whether or not this is a dry run rhythmdb-file -> gchararray: rhythmdb-file The RhythmDB file to use playlists-file -> gchararray: playlists-file The playlists file to use selected-source -> RBSource: selected-source Source which is currently selected db -> RhythmDB: RhythmDB RhythmDB object ui-manager -> GtkUIManager: GtkUIManager GtkUIManager object clipboard -> RBShellClipboard: RBShellClipboard RBShellClipboard object playlist-manager -> RBPlaylistManager: RBPlaylistManager RBPlaylistManager object removable-media-manager -> RBRemovableMediaManager: RBRemovableMediaManager RBRemovableMediaManager object shell-player -> RBShellPlayer: RBShellPlayer RBShellPlayer object window -> GtkWindow: GtkWindow GtkWindow object prefs -> RBShellPreferences: RBShellPreferences RBShellPreferences object queue-source -> RBPlayQueueSource: queue-source Queue source library-source -> RBLibrarySource: library-source Library source sourcelist-model -> RBSourceListModel: sourcelist-model RBSourcelistModel sourcelist -> RBSourceList: sourcelist RBSourcelist source-header -> RBSourceHeader: source header widget RBSourceHeader visibility -> gboolean: visibility Current window visibility Signals from GObject: notify (GParam)
+__cmp__    x.__cmp__(y) <==> cmp(x,y)
+__copy__   None
+__deepcopy__ None
+__delattr__ x.__delattr__('name') <==> del x.name
+__format__ default object formatter
+__getattribute__ x.__getattribute__('name') <==> x.name
+__gobject_init__ None
+__hash__   x.__hash__() <==> hash(x)
+__init__   x.__init__(...) initializes x; see x.__class__.__doc__ for signature
+__new__    T.__new__(S, ...) -> a new object with type S, a subtype of T
+__reduce__ helper for pickle
+__reduce_ex__ helper for pickle
+__repr__   x.__repr__() <==> repr(x)
+__setattr__ x.__setattr__('name', value) <==> x.name = value
+__sizeof__ __sizeof__() -> size of object in memory, in bytes
+__str__    x.__str__() <==> str(x)
+__subclasshook__ Abstract classes can override this to customize issubclass(). This is invoked early on by abc.ABCMeta.__subclasscheck__(). It should return True, False or NotImplemented. If it returns NotImplemented, the normal algorithm is used. Otherwise, it overrides the normal algorithm (and the outcome is cached).
+add_to_queue None
+add_uri    None
+add_widget None
+append_source None
+chain      None
+connect    None
+connect_after None
+connect_object None
+connect_object_after None
+disconnect None
+disconnect_by_func None
+do_notify  None
+emit       None
+emit_stop_by_name None
+freeze_notify None
+get_data   None
+get_party_mode None
+get_player None
+get_playlist_manager None
+get_properties None
+get_property None
+get_source_by_entry_type None
+get_ui_manager None
+guess_source_for_uri None
+handler_block None
+handler_block_by_func None
+handler_disconnect None
+handler_is_connected None
+handler_unblock None
+handler_unblock_by_func None
+load_uri   None
+notebook_set_page None
+notify     None
+notify_custom None
+present    None
+register_entry_type_for_source None
+remove_from_queue None
+remove_widget None
+set_data   None
+set_properties None
+set_property None
+stop_emission None
+thaw_notify None
+toggle_visibility None
+weak_ref   None
+>>> player = shell.get_player()
+>>> info(player)
+__class__  Object RBShellPlayer Signals from RBShellPlayer: missing-plugins (GStrv, GStrv, GClosure) -> gboolean window-title-changed (gchararray) elapsed-changed (guint) playing-source-changed (RBSource) playing-changed (gboolean) playing-song-changed (RhythmDBEntry) playing-uri-changed (gchararray) playing-song-property-changed (gchararray, gchararray, GValue, GValue) elapsed-nano-changed (gint64) Properties from RBShellPlayer: source -> RBSource: RBSource RBSource object db -> RhythmDB: RhythmDB RhythmDB object ui-manager -> GtkUIManager: GtkUIManager GtkUIManager object action-group -> GtkActionGroup: GtkActionGroup GtkActionGroup object play-order -> gchararray: play-order What play order to use playing -> gboolean: playing Whether Rhythmbox is currently playing volume -> gfloat: volume Current playback volume statusbar -> RBStatusbar: RBStatusbar RBStatusbar object queue-source -> RBPlaylistSource: RBPlayQueueSource RBPlayQueueSource object queue-only -> gboolean: Queue only Activation only adds to queue playing-from-queue -> gboolean: Playing from queue Whether playing from the play queue or not player -> GObject: RBPlayer RBPlayer object Properties from GtkBox: spacing -> gint: Spacing The amount of space between children homogeneous -> gboolean: Homogeneous Whether the children should all be the same size Signals from GtkContainer: child-added (GtkWidget) child-removed (GtkWidget) add (GtkWidget) remove (GtkWidget) check-resize () set-focus-child (GtkWidget) Properties from GtkContainer: border-width -> guint: Border width The width of the empty border outside the containers children resize-mode -> GtkResizeMode: Resize mode Specify how resize events are handled child -> GtkWidget: Child Can be used to add a new child to the container Signals from GtkWidget: parent-set (GtkWidget) event (GdkEvent) -> gboolean state-changed (GtkStateType) composited-changed () show () hide () map () unmap () realize () unrealize () size-request (GtkRequisition) size-allocate (GdkRectangle) hierarchy-changed (GtkWidget) style-set (GtkStyle) direction-changed (GtkTextDirection) grab-notify (gboolean) child-notify (GParam) mnemonic-activate (gboolean) -> gboolean grab-focus () focus (GtkDirectionType) -> gboolean move-focus (GtkDirectionType) event-after (GdkEvent) button-press-event (GdkEvent) -> gboolean button-release-event (GdkEvent) -> gboolean scroll-event (GdkEvent) -> gboolean motion-notify-event (GdkEvent) -> gboolean keynav-failed (GtkDirectionType) -> gboolean delete-event (GdkEvent) -> gboolean destroy-event (GdkEvent) -> gboolean expose-event (GdkEvent) -> gboolean key-press-event (GdkEvent) -> gboolean key-release-event (GdkEvent) -> gboolean enter-notify-event (GdkEvent) -> gboolean leave-notify-event (GdkEvent) -> gboolean configure-event (GdkEvent) -> gboolean focus-in-event (GdkEvent) -> gboolean focus-out-event (GdkEvent) -> gboolean map-event (GdkEvent) -> gboolean unmap-event (GdkEvent) -> gboolean property-notify-event (GdkEvent) -> gboolean selection-clear-event (GdkEvent) -> gboolean selection-request-event (GdkEvent) -> gboolean selection-notify-event (GdkEvent) -> gboolean selection-received (GtkSelectionData, guint) selection-get (GtkSelectionData, guint, guint) proximity-in-event (GdkEvent) -> gboolean proximity-out-event (GdkEvent) -> gboolean drag-leave (GdkDragContext, guint) drag-begin (GdkDragContext) drag-end (GdkDragContext) drag-data-delete (GdkDragContext) drag-failed (GdkDragContext, GtkDragResult) -> gboolean drag-motion (GdkDragContext, gint, gint, guint) -> gboolean drag-drop (GdkDragContext, gint, gint, guint) -> gboolean drag-data-get (GdkDragContext, GtkSelectionData, guint, guint) drag-data-received (GdkDragContext, gint, gint, GtkSelectionData, guint, guint) visibility-notify-event (GdkEvent) -> gboolean client-event (GdkEvent) -> gboolean no-expose-event (GdkEvent) -> gboolean window-state-event (GdkEvent) -> gboolean damage-event (GdkEvent) -> gboolean grab-broken-event (GdkEvent) -> gboolean query-tooltip (gint, gint, gboolean, GtkTooltip) -> gboolean popup-menu () -> gboolean show-help (GtkWidgetHelpType) -> gboolean accel-closures-changed () screen-changed (GdkScreen) can-activate-accel (guint) -> gboolean Properties from GtkWidget: name -> gchararray: Widget name The name of the widget parent -> GtkContainer: Parent widget The parent widget of this widget. Must be a Container widget width-request -> gint: Width request Override for width request of the widget, or -1 if natural request should be used height-request -> gint: Height request Override for height request of the widget, or -1 if natural request should be used visible -> gboolean: Visible Whether the widget is visible sensitive -> gboolean: Sensitive Whether the widget responds to input app-paintable -> gboolean: Application paintable Whether the application will paint directly on the widget can-focus -> gboolean: Can focus Whether the widget can accept the input focus has-focus -> gboolean: Has focus Whether the widget has the input focus is-focus -> gboolean: Is focus Whether the widget is the focus widget within the toplevel can-default -> gboolean: Can default Whether the widget can be the default widget has-default -> gboolean: Has default Whether the widget is the default widget receives-default -> gboolean: Receives default If TRUE, the widget will receive the default action when it is focused composite-child -> gboolean: Composite child Whether the widget is part of a composite widget style -> GtkStyle: Style The style of the widget, which contains information about how it will look (colors etc) events -> GdkEventMask: Events The event mask that decides what kind of GdkEvents this widget gets extension-events -> GdkExtensionMode: Extension events The mask that decides what kind of extension events this widget gets no-show-all -> gboolean: No show all Whether gtk_widget_show_all() should not affect this widget has-tooltip -> gboolean: Has tooltip Whether this widget has a tooltip tooltip-markup -> gchararray: Tooltip markup The contents of the tooltip for this widget tooltip-text -> gchararray: Tooltip Text The contents of the tooltip for this widget window -> GdkWindow: Window The widget's window if it is realized double-buffered -> gboolean: Double Buffered Whether or not the widget is double buffered Signals from GtkObject: destroy () Properties from GtkObject: user-data -> gpointer: User Data Anonymous User Data Pointer Signals from GObject: notify (GParam)
+__cmp__    x.__cmp__(y) <==> cmp(x,y)
+__copy__   None
+__deepcopy__ None
+__delattr__ x.__delattr__('name') <==> del x.name
+__format__ default object formatter
+__getattribute__ x.__getattribute__('name') <==> x.name
+__gobject_init__ None
+__hash__   x.__hash__() <==> hash(x)
+__init__   x.__init__(...) initializes x; see x.__class__.__doc__ for signature
+__new__    T.__new__(S, ...) -> a new object with type S, a subtype of T
+__reduce__ helper for pickle
+__reduce_ex__ helper for pickle
+__repr__   x.__repr__() <==> repr(x)
+__setattr__ x.__setattr__('name', value) <==> x.name = value
+__sizeof__ __sizeof__() -> size of object in memory, in bytes
+__str__    x.__str__() <==> str(x)
+__subclasshook__ Abstract classes can override this to customize issubclass(). This is invoked early on by abc.ABCMeta.__subclasscheck__(). It should return True, False or NotImplemented. If it returns NotImplemented, the normal algorithm is used. Otherwise, it overrides the normal algorithm (and the outcome is cached).
+add_child  None
+add_play_order None
+chain      None
+connect    None
+connect_after None
+connect_object None
+connect_object_after None
+construct_child None
+disconnect None
+disconnect_by_func None
+do_add_child None
+do_construct_child None
+do_get_internal_child None
+do_next    None
+do_parser_finished None
+do_previous None
+do_set_name None
+emit       None
+emit_stop_by_name None
+freeze_notify None
+get_data   None
+get_internal_child None
+get_mute   None
+get_name   None
+get_orientation None
+get_playback_state None
+get_playing None
+get_playing_entry None
+get_playing_path None
+get_playing_song_duration None
+get_playing_source None
+get_playing_time None
+get_playing_time_string None
+get_properties None
+get_property None
+get_volume None
+handler_block None
+handler_block_by_func None
+handler_disconnect None
+handler_is_connected None
+handler_unblock None
+handler_unblock_by_func None
+jump_to_current None
+notify     None
+parser_finished None
+pause      None
+play       None
+play_entry None
+playpause  None
+ref_accessible None
+remove_play_order None
+seek       None
+set_data   None
+set_mute   None
+set_name   None
+set_orientation None
+set_playback_state None
+set_playing_source None
+set_playing_time None
+set_properties None
+set_property None
+set_selected_source None
+set_volume None
+set_volume_relative None
+stop       None
+stop_emission None
+thaw_notify None
+toggle_mute None
+weak_ref   None
+>>> player.get_playing_entry()
+<RhythmDBEntry at 0x7f9cdc076660>
+>>> player.get_playing_entry()
+<RhythmDBEntry at 0x7f9cdc076660>
+>>> player.get_playing_entry()
+<RhythmDBEntry at 0x7f9cdc098650>
+>>> player.get_playing_entry()
+>>> player.get_playing_entry()
+>>> player.get_playing_entry()
+>>> if player.get_playing_entry() is None :
+...   print "Stopped"
+... 
+Stopped
+>>> if player.get_playing_entry() is None :
+...   print "Stopped"
+... 
+>>> isinstance(player.get_playing_source(),'RBStreamingSource')
+Traceback (most recent call last):
+  File "/usr/lib/rhythmbox/plugins/python-console/pythonconsole.py", line 389, in __run
+    r = eval(command, self.namespace, self.namespace)
+  File "<string>", line 1, in <module>
+TypeError: isinstance() arg 2 must be a class, type, or tuple of classes and types
+>>> entry = player.get_playing_entry()
+>>> info (entry)
+__class__  None
+__cmp__    x.__cmp__(y) <==> cmp(x,y)
+__delattr__ x.__delattr__('name') <==> del x.name
+__format__ default object formatter
+__getattribute__ x.__getattribute__('name') <==> x.name
+__hash__   x.__hash__() <==> hash(x)
+__init__   x.__init__(...) initializes x; see x.__class__.__doc__ for signature
+__new__    T.__new__(S, ...) -> a new object with type S, a subtype of T
+__reduce__ helper for pickle
+__reduce_ex__ helper for pickle
+__repr__   x.__repr__() <==> repr(x)
+__setattr__ x.__setattr__('name', value) <==> x.name = value
+__sizeof__ __sizeof__() -> size of object in memory, in bytes
+__str__    x.__str__() <==> str(x)
+__subclasshook__ Abstract classes can override this to customize issubclass(). This is invoked early on by abc.ABCMeta.__subclasscheck__(). It should return True, False or NotImplemented. If it returns NotImplemented, the normal algorithm is used. Otherwise, it overrides the normal algorithm (and the outcome is cached).
+copy       None
+get_entry_type None
+get_playback_uri None
+>>> info (entry.get_entry_type())
+Traceback (most recent call last):
+  File "/usr/lib/rhythmbox/plugins/python-console/pythonconsole.py", line 389, in __run
+    r = eval(command, self.namespace, self.namespace)
+  File "<string>", line 1, in <module>
+  File "<string>", line 4, in info
+SystemError: error return without exception set
+>>> info(entry.get_entry_type())
+Traceback (most recent call last):
+  File "/usr/lib/rhythmbox/plugins/python-console/pythonconsole.py", line 389, in __run
+    r = eval(command, self.namespace, self.namespace)
+  File "<string>", line 1, in <module>
+  File "<string>", line 4, in info
+SystemError: error return without exception set
+>>> entrytype = entry.get_entry_type()
+>>> info(entrytype)
+Traceback (most recent call last):
+  File "/usr/lib/rhythmbox/plugins/python-console/pythonconsole.py", line 389, in __run
+    r = eval(command, self.namespace, self.namespace)
+  File "<string>", line 1, in <module>
+  File "<string>", line 4, in info
+SystemError: error return without exception set
+>>> entrytype
+<RhythmDBEntryType at 0x26cd940>
+>>> entrytype.category()
+Traceback (most recent call last):
+  File "/usr/lib/rhythmbox/plugins/python-console/pythonconsole.py", line 389, in __run
+    r = eval(command, self.namespace, self.namespace)
+  File "<string>", line 1, in <module>
+TypeError: 'EntryCategory' object is not callable
+>>> print entrytype
+<RhythmDBEntryType at 0x26cd940>
+>>> entrytype.category
+<enum RHYTHMDB_ENTRY_STREAM of type RhythmDBEntryCategory>
+>>> entrytype.category
+<enum RHYTHMDB_ENTRY_STREAM of type RhythmDBEntryCategory>
+>>> entrytype.category
+<enum RHYTHMDB_ENTRY_STREAM of type RhythmDBEntryCategory>
+>>> entrytype.category
+<enum RHYTHMDB_ENTRY_STREAM of type RhythmDBEntryCategory>
+>>> entrytype.category
+<enum RHYTHMDB_ENTRY_STREAM of type RhythmDBEntryCategory>
+>>> entry = player.get_playing_entry()
+>>> entrytype = entry.get_entry_type()
+>>> entrytype.category
+<enum RHYTHMDB_ENTRY_NORMAL of type RhythmDBEntryCategory>
+>>> entry = player.get_playing_entry()
+>>> entrytype = entry.get_entry_type()
+>>> entrytype.category
+<enum RHYTHMDB_ENTRY_STREAM of type RhythmDBEntryCategory>
+>>> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+iiping@iiping-desktop:~/Projects/python/rhythmbox-plugins/Rhythmbox-Skype-Mood-Notifier$ git status
+# On branch 0.40
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   README
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	dev-notes
+no changes added to commit (use "git add" and/or "git commit -a")
+iiping@iiping-desktop:~/Projects/python/rhythmbox-plugins/Rhythmbox-Skype-Mood-Notifier$ ls
+DBusSkype.py  __init__.py  LICENSCE     rbskypenotify.rb-plugin
+dev-notes     install.sh   pref.dialog  README
+iiping@iiping-desktop:~/Projects/python/rhythmbox-plugins/Rhythmbox-Skype-Mood-Notifier$ python
+Python 2.6.5 (r265:79063, Apr 16 2010, 13:57:41) 
+[GCC 4.4.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> playerplaying = false
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'false' is not defined
+>>> playerplaying=False
+>>> playerplaying
+False
+>>> if playerplaying :
+...   print "yippie"
+... 
+>>> from DBusSkype import *
+>>> def togglePlay():
+...   if playerplaying :
+...     playerplaying = False
+...   else
+  File "<stdin>", line 4
+    else
+       ^
+SyntaxError: invalid syntax
+>>> def togglePlay():
+...   if playerplaying :
+...     playerplaying = False
+...   else :
+...     playerplaying = True
+... 
+>>> skype  = SkypeRhythmboxMediator(togglePlay,togglePlay,playerplaying)
+>>> skype.hook()
+>>> skype.SKSetMood('test from python console')
+>>> skype.SKSetMood('please give me a notification before closing')
+>>> skype.SKSetMood('please give me a notification before closing')
+>>> skype.SKSetMood('hmmm.. problematic')
+>>> del skype
+>>> 
+
+
+playerplaying=False
+from DBusSkype import *
+def togglePlay():
+  if playerplaying :
+    playerplaying = False
+  else :
+    playerplaying = True
+
+skype  = SkypeRhythmboxMediator(togglePlay,togglePlay,playerplaying)
+skype.hook()
+
+
+
+
+################# start / quit skype
+>>> debug :: SKLoginLout initiated 
+debug :: name  com.Skype.API
+debug :: oldAddress :1.225
+debug :: newAddress 
+
+>>> debug :: SKLoginLout initiated 
+debug :: name  com.Skype.API
+debug :: oldAddress 
+debug :: newAddress :1.228
+
+>>> debug :: SKLoginLout initiated 
+debug :: name  com.Skype.API
+debug :: oldAddress :1.228
+debug :: newAddress 
+debug :: SKLoginLout initiated 
+debug :: name  com.Skype.API
+debug :: oldAddress 
+debug :: newAddress :1.230
+
+
+
+
+
+
+# if skype was running already and we launch rhythmbox
+
+
+Python 2.6.5 (r265:79063, Apr 16 2010, 13:57:41) 
+[GCC 4.4.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> playerplaying=False
+>>> from DBusSkype import *
+>>> def togglePlay():
+...   if playerplaying :
+...     playerplaying = False
+...   else :
+...     playerplaying = True
+... 
+>>> skype  = SkypeRhythmboxMediator(togglePlay,togglePlay,playerplaying)
+>>> skype.hook()
+>>> debug :: remove me ::>> CONNSTATUS ONLINE
+debug :: remove me ::>> CURRENTUSERHANDLE iiping01
+debug :: remove me ::>> USERSTATUS ONLINE
+
+>>> 
+
+
+
+Entry      None
+EntryCategory None
+EntryType  None
+ImportJob  Object RhythmDBImportJob Signals from RhythmDBImportJob: entry-added (RhythmDBEntry) status-changed (gint, gint) complete (gint) scan-complete (gint) Properties from RhythmDBImportJob: db -> RhythmDB: db RhythmDB object entry-type -> RhythmDBEntryType: Entry type Entry type to use for entries added by this job ignore-type -> RhythmDBEntryType: Ignored entry type Entry type to use for ignored entries added by this job error-type -> RhythmDBEntryType: Error entry type Entry type to use for import error entries added by this job Signals from GObject: notify (GParam)
+PropType   None
+PropertyModel Object RhythmDBPropertyModel Signals from RhythmDBPropertyModel: pre-row-deletion () Properties from RhythmDBPropertyModel: db -> RhythmDB: RhythmDB RhythmDB object prop -> gint: propid Property id query-model -> RhythmDBQueryModel: RhythmDBQueryModel RhythmDBQueryModel object Signals from GtkTreeModel: row-changed (GtkTreePath, GtkTreeIter) row-inserted (GtkTreePath, GtkTreeIter) row-has-child-toggled (GtkTreePath, GtkTreeIter) row-deleted (GtkTreePath) rows-reordered (GtkTreePath, GtkTreeIter, gpointer) Signals from GObject: notify (GParam)
+PropertyModelColumn None
+Query      None
+QueryModel Object RhythmDBQueryModel Signals from RhythmDBQueryModel: entry-prop-changed (RhythmDBEntry, gint, gpointer, gpointer) entry-removed (RhythmDBEntry) non-entry-dropped (gchararray, gint) complete () post-entry-delete (RhythmDBEntry) filter-entry-drop (RhythmDBEntry) -> gboolean Properties from RhythmDBQueryModel: db -> RhythmDB: RhythmDB RhythmDB object query -> gpointer: Query RhythmDBQuery sort-func -> gpointer: SortFunc Sort function sort-data -> gpointer: Sort data Sort data sort-data-destroy -> gpointer: Sort data destroy Sort data destroy function sort-reverse -> gboolean: sort-reverse Reverse sort order flag limit-type -> RhythmDBQueryModelLimitType: limit-type type of limit limit-value -> GValueArray: limit-value value of limit show-hidden -> gboolean: show hidden if TRUE, include entries that are ordinarily hidden base-model -> RhythmDBQueryModel: base-model base RhythmDBQueryModel Signals from GtkTreeModel: row-changed (GtkTreePath, GtkTreeIter) row-inserted (GtkTreePath, GtkTreeIter) row-has-child-toggled (GtkTreePath, GtkTreeIter) row-deleted (GtkTreePath) rows-reordered (GtkTreePath, GtkTreeIter, gpointer) Signals from GObject: notify (GParam)
+QueryModelLimitType None
+QueryResults None
+QueryType  None
+RhythmDB   Object RhythmDB Signals from RhythmDB: entry-added (RhythmDBEntry) entry-deleted (RhythmDBEntry) entry-changed (RhythmDBEntry, gpointer) entry-keyword-added (RhythmDBEntry, RBRefString) entry-keyword-removed (RhythmDBEntry, RBRefString) entry-extra-metadata-request (RhythmDBEntry) -> GValue entry-extra-metadata-notify (RhythmDBEntry, gchararray, GValue) entry-extra-metadata-gather (RhythmDBEntry, RBStringValueMap) load-complete () save-complete () save-error (gchararray, gpointer) read-only (gboolean) missing-plugins (GStrv, GStrv, GClosure) -> gboolean create-mount-op () -> GMountOperation Properties from RhythmDB: name -> gchararray: name name dry-run -> gboolean: dry run Whether or not changes should be saved no-update -> gboolean: no update Whether or not to update the database Signals from GObject: notify (GParam)
+StringValueMap Object RBStringValueMap Signals from GObject: notify (GParam)
+rhythmdb_compute_status_normal None
+rhythmdb_query_model_album_sort_func None
+rhythmdb_query_model_artist_sort_func None
+rhythmdb_query_model_date_sort_func None
+rhythmdb_query_model_double_ceiling_sort_func None
+rhythmdb_query_model_genre_sort_func None
+rhythmdb_query_model_location_sort_func None
+rhythmdb_query_model_string_sort_func None
+rhythmdb_query_model_title_sort_func None
+rhythmdb_query_model_track_sort_func None
+rhythmdb_query_model_ulong_sort_func None
+>>> 
+
+
+
+
+
+
+
+
+
