@@ -1,7 +1,5 @@
 #    Rhythmbox Skype Mood Notifier - updates skype mood text from playlist
-#    Copyright (C) 2007 Christopher Gabijan
-#    Copyright (C) 2008 Christopher Gabijan ????? still ???? \(^_^)_ 
-#    Copyright (C) 2009 Christopher Gabijan ????? come-on ~(*_*)~
+#    Copyright (C) 2010 Christopher Gabijan
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -80,10 +78,26 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
     del self.mood_msg
     del self.pause_msg
 
+  #@deprecated v0.4 changed by playerStatus
   def isPlayerPlaying(self):
     player= self.shell.get_player()
     if(player):
       return player.props.playing
+
+  # routine 
+  # 1 : play
+  # 2 : stop
+  # 3 : paused
+  def playerStatus(self):
+    if self.player.playing :
+      return 1
+    else : 
+      entry = self.player.get_playing_entry()
+      if entry is None :
+        return 2
+      else :
+        return 3
+
 
   def song_changed(self, player, entry):
    db = self.shell.get_property('db')

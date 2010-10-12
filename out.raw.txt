@@ -432,6 +432,289 @@ rhythmdb_query_model_ulong_sort_func None
 
 
 
+debug :: remove me ::>> CALL 423 STATUS ROUTING
+debug :: remove me ::>> CALL 423 STATUS ROUTING
+debug :: remove me ::>> CALL 423 STATUS RINGING
+debug :: remove me ::>> CALL 423 STATUS INPROGRESS
+debug :: remove me ::>> CALL 423 DURATION 1
+debug :: remove me ::>> CALL 423 DURATION 2
+debug :: remove me ::>> CALL 423 DURATION 3
+debug :: remove me ::>> CALL 423 DURATION 4
+debug :: remove me ::>> CALL 423 DURATION 5
+debug :: remove me ::>> CALL 423 DURATION 6
+debug :: remove me ::>> CALL 423 DURATION 7
+debug :: remove me ::>> CALL 428 STATUS ROUTING
+debug :: remove me ::>> CALL 428 STATUS CANCELLED
+debug :: remove me ::>> CALL 428 STATUS CANCELLED
+debug :: remove me ::>> CALL 423 DURATION 8
+debug :: remove me ::>> CALL 423 DURATION 9
+debug :: remove me ::>> CALL 423 DURATION 10
+debug :: remove me ::>> CALL 423 DURATION 11
+debug :: remove me ::>> CALL 423 DURATION 12
+debug :: remove me ::>> CALL 423 DURATION 13
+debug :: remove me ::>> CALL 423 DURATION 14
+debug :: remove me ::>> CALL 423 DURATION 15
+debug :: remove me ::>> CALL 423 DURATION 16
+debug :: remove me ::>> CALL 423 DURATION 17
+debug :: remove me ::>> CALL 423 DURATION 18
+debug :: remove me ::>> CALL 423 DURATION 19
+debug :: remove me ::>> CALL 423 DURATION 20
+debug :: remove me ::>> CALL 423 DURATION 21
+debug :: remove me ::>> CALL 423 STATUS FINISHED
+
+>>> debug :: remove me ::>> CALL 433 STATUS ROUTING
+debug :: remove me ::>> CALL 433 STATUS ROUTING
+debug :: remove me ::>> CALL 438 STATUS ROUTING
+debug :: remove me ::>> CALL 438 STATUS ROUTING
+debug :: remove me ::>> CALL 438 STATUS CANCELLED
+debug :: remove me ::>> CALL 433 STATUS CANCELLED
+debug :: remove me ::>> CALL 443 STATUS ROUTING
+debug :: remove me ::>> CALL 443 STATUS ROUTING
+debug :: remove me ::>> CALL 443 STATUS RINGING
+debug :: remove me ::>> CALL 443 STATUS INPROGRESS
+debug :: remove me ::>> CALL 443 DURATION 1
+debug :: remove me ::>> CALL 443 DURATION 2
+debug :: remove me ::>> CALL 443 DURATION 3
+debug :: remove me ::>> CALL 443 DURATION 4
+debug :: remove me ::>> CALL 443 DURATION 5
+debug :: remove me ::>> CALL 448 STATUS ROUTING
+debug :: remove me ::>> CALL 448 STATUS ROUTING
+debug :: remove me ::>> CALL 448 STATUS CANCELLED
+debug :: remove me ::>> CALL 443 DURATION 6
+debug :: remove me ::>> CALL 443 DURATION 7
+debug :: remove me ::>> CALL 443 DURATION 8
+debug :: remove me ::>> CALL 443 DURATION 9
+debug :: remove me ::>> CALL 443 DURATION 10
+debug :: remove me ::>> CALL 443 DURATION 11
+debug :: remove me ::>> CALL 443 DURATION 12
+debug :: remove me ::>> CALL 443 DURATION 13
+debug :: remove me ::>> CALL 443 DURATION 14
+debug :: remove me ::>> CALL 443 DURATION 15
+debug :: remove me ::>> CALL 443 DURATION 16
+debug :: remove me ::>> CALL 443 DURATION 17
+debug :: remove me ::>> CALL 443 DURATION 18
+debug :: remove me ::>> CALL 443 DURATION 19
+debug :: remove me ::>> CALL 443 DURATION 20
+debug :: remove me ::>> CALL 443 DURATION 21
+debug :: remove me ::>> CALL 443 DURATION 22
+debug :: remove me ::>> CALL 443 DURATION 23
+debug :: remove me ::>> CALL 443 DURATION 24
+debug :: remove me ::>> CALL 443 DURATION 25
+debug :: remove me ::>> CALL 443 DURATION 26
+debug :: remove me ::>> CALL 443 DURATION 27
+debug :: remove me ::>> CALL 443 DURATION 28
+debug :: remove me ::>> CALL 443 DURATION 29
+debug :: remove me ::>> CALL 443 STATUS FINISHED
+
+>>> debug :: remove me ::>> CALL 454 STATUS ROUTING
+debug :: remove me ::>> CALL 454 STATUS ROUTING
+debug :: remove me ::>> CALL 454 STATUS RINGING
+debug :: remove me ::>> CALL 454 STATUS INPROGRESS
+debug :: remove me ::>> CALL 454 DURATION 1
+debug :: remove me ::>> CALL 454 STATUS LOCALHOLD
+debug :: remove me ::>> CALL 454 DURATION 2
+debug :: remove me ::>> CALL 454 FAILUREREASON 14
+debug :: remove me ::>> CALL 454 STATUS FINISHED
+debug :: remove me ::>> CALL 462 STATUS ROUTING
+debug :: remove me ::>> CALL 462 STATUS ROUTING
+debug :: remove me ::>> CALL 462 STATUS RINGING
+debug :: remove me ::>> CALL 462 STATUS INPROGRESS
+debug :: remove me ::>> CALL 462 DURATION 1
+debug :: remove me ::>> CALL 462 DURATION 2
+debug :: remove me ::>> CALL 462 DURATION 3
+debug :: remove me ::>> CALL 462 DURATION 4
+debug :: remove me ::>> CALL 462 DURATION 5
+debug :: remove me ::>> CALL 462 DURATION 6
+debug :: remove me ::>> CALL 462 DURATION 7
+debug :: remove me ::>> CALL 462 DURATION 8
+debug :: remove me ::>> CALL 462 DURATION 9
+debug :: remove me ::>> CALL 462 DURATION 10
+debug :: remove me ::>> CALL 462 STATUS LOCALHOLD
+debug :: remove me ::>> CALL 462 DURATION 11
+debug :: remove me ::>> CALL 462 DURATION 12
+debug :: remove me ::>> CALL 462 FAILUREREASON 14
+debug :: remove me ::>> CALL 462 STATUS FINISHED
+
+>>> debug :: remove me ::>> CALL 468 STATUS ROUTING
+debug :: remove me ::>> CALL 468 STATUS ROUTING
+debug :: remove me ::>> CALL 468 STATUS RINGING
+debug :: remove me ::>> CALL 468 STATUS INPROGRESS
+debug :: remove me ::>> CALL 468 DURATION 1
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a NAME #iiping01/$marcgallego;6c6110e3ff34663a
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a ACTIVITY_TIMESTAMP 0
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a TYPE DIALOG
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a STATUS DIALOG
+debug :: remove me ::>> CHATMEMBER 473 ROLE USER
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a MYROLE USER
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a MEMBERS iiping01 marcgallego
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a ACTIVEMEMBERS iiping01
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a MYSTATUS SUBSCRIBED
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a STATUS DIALOG
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a TIMESTAMP 1286830914
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a DIALOG_PARTNER marcgallego
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a MEMBERS iiping01 marcgallego
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a FRIENDLYNAME Lawrence Marc D. Gallego
+debug :: remove me ::>> CHATMESSAGE 475 STATUS SENDING
+debug :: remove me ::>> CALL 468 DURATION 2
+debug :: remove me ::>> CALL 468 DURATION 3
+debug :: remove me ::>> CALL 468 DURATION 4
+debug :: remove me ::>> CALL 468 DURATION 5
+debug :: remove me ::>> CALL 468 DURATION 6
+debug :: remove me ::>> CALL 468 DURATION 7
+debug :: remove me ::>> CALL 468 DURATION 8
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a POSTERS iiping01
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a ACTIVITY_TIMESTAMP 1286830921
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a FRIENDLYNAME Lawrence Marc D. Gallego | yo hehehehe buhi pa
+debug :: remove me ::>> CHATMESSAGE 476 STATUS SENDING
+debug :: remove me ::>> CALL 468 DURATION 9
+debug :: remove me ::>> CALL 468 DURATION 10
+debug :: remove me ::>> CALL 468 DURATION 11
+debug :: remove me ::>> CALL 468 DURATION 12
+debug :: remove me ::>> CALL 468 DURATION 13
+debug :: remove me ::>> CALL 468 DURATION 14
+debug :: remove me ::>> CALL 468 DURATION 15
+debug :: remove me ::>> CALL 468 DURATION 16
+debug :: remove me ::>> CALL 468 DURATION 17
+debug :: remove me ::>> CALL 468 DURATION 18
+debug :: remove me ::>> CALL 468 DURATION 19
+debug :: remove me ::>> CALL 468 DURATION 20
+debug :: remove me ::>> CALL 468 DURATION 21
+debug :: remove me ::>> CALL 468 DURATION 22
+debug :: remove me ::>> CALL 468 DURATION 23
+debug :: remove me ::>> CALL 468 DURATION 24
+debug :: remove me ::>> CALL 468 DURATION 25
+debug :: remove me ::>> CALL 468 DURATION 26
+debug :: remove me ::>> CALL 468 DURATION 27
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a ACTIVITY_TIMESTAMP 1286830940
+debug :: remove me ::>> CHATMESSAGE 478 STATUS SENDING
+debug :: remove me ::>> CHATMESSAGE 475 STATUS SENT
+debug :: remove me ::>> CHATMESSAGE 476 STATUS SENT
+debug :: remove me ::>> CALL 468 DURATION 28
+debug :: remove me ::>> CALL 468 DURATION 29
+debug :: remove me ::>> CALL 468 DURATION 30
+debug :: remove me ::>> CALL 468 DURATION 31
+debug :: remove me ::>> CHATMESSAGE 478 STATUS SENT
+debug :: remove me ::>> CALL 468 DURATION 32
+debug :: remove me ::>> CALL 468 DURATION 33
+debug :: remove me ::>> CALL 468 DURATION 34
+debug :: remove me ::>> CALL 468 DURATION 35
+debug :: remove me ::>> CALL 468 DURATION 36
+debug :: remove me ::>> CALL 468 DURATION 37
+debug :: remove me ::>> CHATMEMBER 474 IS_ACTIVE TRUE
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a ACTIVEMEMBERS iiping01 marcgallego
+debug :: remove me ::>> CALL 468 DURATION 38
+debug :: remove me ::>> CALL 468 DURATION 39
+debug :: remove me ::>> CALL 468 DURATION 40
+debug :: remove me ::>> CALL 468 DURATION 41
+debug :: remove me ::>> CALL 468 DURATION 42
+debug :: remove me ::>> CALL 468 DURATION 43
+debug :: remove me ::>> CALL 468 DURATION 44
+debug :: remove me ::>> CALL 468 DURATION 45
+debug :: remove me ::>> CALL 468 DURATION 46
+debug :: remove me ::>> CALL 468 DURATION 47
+debug :: remove me ::>> CALL 468 DURATION 48
+debug :: remove me ::>> CALL 468 DURATION 49
+debug :: remove me ::>> CALL 468 DURATION 50
+debug :: remove me ::>> CALL 468 DURATION 51
+debug :: remove me ::>> CALL 468 FAILUREREASON 14
+debug :: remove me ::>> CALL 468 STATUS FINISHED
+debug :: remove me ::>> CALL 492 STATUS ROUTING
+debug :: remove me ::>> CALL 492 STATUS ROUTING
+debug :: remove me ::>> PROFILE RICH_MOOD_TEXT <SS type="talking">\(^_^)_</SS>
+debug :: remove me ::>> PROFILE MOOD_TEXT \(^_^)_
+debug :: remove me ::>> USER iiping01 RICH_MOOD_TEXT <SS type="talking">\(^_^)_</SS>
+debug :: remove me ::>> USER iiping01 MOOD_TEXT \(^_^)_
+debug :: remove me ::>> CALL 492 STATUS RINGING
+debug :: remove me ::>> CALL 492 STATUS INPROGRESS
+debug :: remove me ::>> CALL 492 DURATION 1
+debug :: remove me ::>> CALL 497 STATUS ROUTING
+debug :: remove me ::>> CALL 497 STATUS ROUTING
+debug :: remove me ::>> CALL 497 STATUS CANCELLED
+debug :: remove me ::>> PROFILE RICH_MOOD_TEXT fixing rhythmbox skypemood notify
+debug :: remove me ::>> PROFILE MOOD_TEXT fixing rhythmbox skypemood notify
+debug :: remove me ::>> USER iiping01 RICH_MOOD_TEXT fixing rhythmbox skypemood notify
+debug :: remove me ::>> USER iiping01 MOOD_TEXT fixing rhythmbox skypemood notify
+debug :: remove me ::>> CALL 492 DURATION 2
+debug :: remove me ::>> CALL 492 DURATION 3
+debug :: remove me ::>> CALL 492 DURATION 4
+debug :: remove me ::>> CALL 492 DURATION 5
+debug :: remove me ::>> CALL 492 STATUS FINISHED
+debug :: remove me ::>> CALL 502 STATUS ROUTING
+debug :: remove me ::>> CALL 502 STATUS ROUTING
+debug :: remove me ::>> PROFILE RICH_MOOD_TEXT <SS type="talking">\(^_^)_</SS>
+debug :: remove me ::>> USER iiping01 RICH_MOOD_TEXT <SS type="talking">\(^_^)_</SS>
+debug :: remove me ::>> PROFILE MOOD_TEXT \(^_^)_
+debug :: remove me ::>> USER iiping01 MOOD_TEXT \(^_^)_
+debug :: remove me ::>> CALL 502 STATUS RINGING
+debug :: remove me ::>> CALL 502 STATUS INPROGRESS
+debug :: remove me ::>> CALL 502 DURATION 1
+debug :: remove me ::>> CALL 502 DURATION 2
+debug :: remove me ::>> CALL 502 DURATION 3
+debug :: remove me ::>> CALL 502 DURATION 4
+debug :: remove me ::>> CALL 502 STATUS FINISHED
+debug :: remove me ::>> PROFILE RICH_MOOD_TEXT fixing rhythmbox skypemood notify
+debug :: remove me ::>> USER iiping01 RICH_MOOD_TEXT fixing rhythmbox skypemood notify
+debug :: remove me ::>> PROFILE MOOD_TEXT fixing rhythmbox skypemood notify
+debug :: remove me ::>> USER iiping01 MOOD_TEXT fixing rhythmbox skypemood notify
+debug :: remove me ::>> CALL 507 STATUS ROUTING
+debug :: remove me ::>> CALL 507 STATUS ROUTING
+debug :: remove me ::>> PROFILE RICH_MOOD_TEXT <SS type="talking">\(^_^)_</SS>
+debug :: remove me ::>> PROFILE MOOD_TEXT \(^_^)_
+debug :: remove me ::>> USER iiping01 RICH_MOOD_TEXT <SS type="talking">\(^_^)_</SS>
+debug :: remove me ::>> USER iiping01 MOOD_TEXT \(^_^)_
+debug :: remove me ::>> CALL 507 STATUS RINGING
+debug :: remove me ::>> CALL 507 STATUS INPROGRESS
+debug :: remove me ::>> PROFILE RICH_MOOD_TEXT <SS type="music">d(^_^)b</SS> Dashboard Confessionals - Hands Down
+debug :: remove me ::>> PROFILE MOOD_TEXT d(^_^)b Dashboard Confessionals - Hands Down
+debug :: remove me ::>> USER iiping01 RICH_MOOD_TEXT <SS type="music">d(^_^)b</SS> Dashboard Confessionals - Hands Down
+debug :: remove me ::>> USER iiping01 MOOD_TEXT d(^_^)b Dashboard Confessionals - Hands Down
+debug :: remove me ::>> CALL 507 DURATION 1
+debug :: remove me ::>> CALL 507 DURATION 2
+debug :: remove me ::>> CALL 507 DURATION 3
+debug :: remove me ::>> CALL 507 DURATION 4
+debug :: remove me ::>> CALL 507 DURATION 5
+debug :: remove me ::>> CALL 507 DURATION 6
+debug :: remove me ::>> CALL 507 DURATION 7
+debug :: remove me ::>> CALL 507 DURATION 8
+debug :: remove me ::>> CALL 507 DURATION 9
+debug :: remove me ::>> CALL 507 STATUS FINISHED
+debug :: remove me ::>> PROFILE RICH_MOOD_TEXT fixing rhythmbox skypemood notify
+debug :: remove me ::>> USER iiping01 RICH_MOOD_TEXT fixing rhythmbox skypemood notify
+debug :: remove me ::>> PROFILE MOOD_TEXT fixing rhythmbox skypemood notify
+debug :: remove me ::>> USER iiping01 MOOD_TEXT fixing rhythmbox skypemood notify
+debug :: remove me ::>> PROFILE RICH_MOOD_TEXT <SS type="music">d(^_^)b</SS> Ohio Is For Lovers (Live Acoustic) - Hawthorne Heights
+debug :: remove me ::>> USER iiping01 RICH_MOOD_TEXT <SS type="music">d(^_^)b</SS> Ohio Is For Lovers (Live Acoustic) - Hawthorne Heights
+debug :: remove me ::>> PROFILE MOOD_TEXT d(^_^)b Ohio Is For Lovers (Live Acoustic) - Hawthorne Heights
+debug :: remove me ::>> USER iiping01 MOOD_TEXT d(^_^)b Ohio Is For Lovers (Live Acoustic) - Hawthorne Heights
+debug :: remove me ::>> CALL 512 STATUS ROUTING
+debug :: remove me ::>> CALL 512 STATUS ROUTING
+debug :: remove me ::>> PROFILE RICH_MOOD_TEXT <SS type="talking">\(^_^)_</SS>
+debug :: remove me ::>> PROFILE MOOD_TEXT \(^_^)_
+debug :: remove me ::>> USER iiping01 RICH_MOOD_TEXT <SS type="talking">\(^_^)_</SS>
+debug :: remove me ::>> USER iiping01 MOOD_TEXT \(^_^)_
+debug :: remove me ::>> CALL 512 STATUS RINGING
+debug :: remove me ::>> CALL 512 STATUS INPROGRESS
+debug :: remove me ::>> PROFILE RICH_MOOD_TEXT <SS type="music">d(^_^)b</SS> Ohio Is For Lovers - Hawthorne Heights
+debug :: remove me ::>> PROFILE MOOD_TEXT d(^_^)b Ohio Is For Lovers - Hawthorne Heights
+debug :: remove me ::>> USER iiping01 RICH_MOOD_TEXT <SS type="music">d(^_^)b</SS> Ohio Is For Lovers - Hawthorne Heights
+debug :: remove me ::>> USER iiping01 MOOD_TEXT d(^_^)b Ohio Is For Lovers - Hawthorne Heights
+debug :: remove me ::>> CALL 512 DURATION 1
+debug :: remove me ::>> CALL 512 DURATION 2
+debug :: remove me ::>> CALL 512 DURATION 3
+debug :: remove me ::>> CALL 512 DURATION 4
+debug :: remove me ::>> CALL 512 STATUS FINISHED
+debug :: remove me ::>> PROFILE RICH_MOOD_TEXT <SS type="music">d(^_^)b</SS> Ohio Is For Lovers (Live Acoustic) - Hawthorne Heights
+debug :: remove me ::>> PROFILE MOOD_TEXT d(^_^)b Ohio Is For Lovers (Live Acoustic) - Hawthorne Heights
+debug :: remove me ::>> USER iiping01 RICH_MOOD_TEXT <SS type="music">d(^_^)b</SS> Ohio Is For Lovers (Live Acoustic) - Hawthorne Heights
+debug :: remove me ::>> USER iiping01 MOOD_TEXT d(^_^)b Ohio Is For Lovers (Live Acoustic) - Hawthorne Heights
+debug :: remove me ::>> PROFILE RICH_MOOD_TEXT fixing rhythmbox skypemood notify
+debug :: remove me ::>> USER iiping01 RICH_MOOD_TEXT fixing rhythmbox skypemood notify
+debug :: remove me ::>> PROFILE MOOD_TEXT fixing rhythmbox skypemood notify
+debug :: remove me ::>> USER iiping01 MOOD_TEXT fixing rhythmbox skypemood notify
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a POSTERS iiping01 marcgallego
+debug :: remove me ::>> CHAT #iiping01/$marcgallego;6c6110e3ff34663a ACTIVITY_TIMESTAMP 1286832996
+debug :: remove me ::>> CHATMESSAGE 521 STATUS RECEIVED
+
 
 
 

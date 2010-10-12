@@ -10,12 +10,10 @@
     <child internal-child="vbox">
       <widget class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <property name="spacing">3</property>
         <child>
           <widget class="GtkVBox" id="vbox1">
             <property name="visible">True</property>
-            <property name="orientation">vertical</property>
             <child>
               <widget class="GtkLabel" id="label3">
                 <property name="visible">True</property>
@@ -76,7 +74,7 @@
             <child>
               <widget class="GtkLabel" id="label2">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">v0.35</property>
+                <property name="label" translatable="yes">v0.40</property>
               </widget>
               <packing>
                 <property name="position">5</property>
