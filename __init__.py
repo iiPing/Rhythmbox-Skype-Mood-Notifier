@@ -26,7 +26,7 @@ STRM_SONG_ALBUM  = 'rb:stream-song-album'
 CONF_KEY_MOOD  = '/apps/rhythmbox/plugins/rbskypemoodnotify/MoodFormat'
 CONF_KEY_PAUSE = '/apps/rhythmbox/plugins/rbskypemoodnotify/PauseMessage'
 
-CONF_VAL_DEFAULT_MOOD = '<SS type="music">d(^_^)b</SS> $TITLE ($ALBUM) - $ARTIST'
+CONF_VAL_DEFAULT_MOOD  = '<SS type="music">d(^_^)b</SS> $TITLE ($ALBUM) - $ARTIST'
 CONF_VAL_DEFAULT_PAUSE = '<SS type="talking">\(^_^)_</SS> ...'
 
 class RhythmboxSkypeMoodNotifier(rb.Plugin):
@@ -36,14 +36,14 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
 
 
   def activate(self, shell):
-    self.old_mood_msg = None
     self.shell = shell
     self.player = shell.get_player()
-    self.skype = SkypeRhythmboxMediator(self.player.pause,self.player.play,self.isPlayerPlaying)
+    self.skype = SkypeRhythmboxMediator(self.got_ringHi,self.got_ringLo)
     self.skype.hook()
-    self.old_mood_msg = self.skype.SKGetMood()
-    self.psc_id = self.player.connect('playing-song-changed', self.song_changed)
+    self.pc_id   = self.player.connect('playing-changed', self.playing_changed)
+    self.psc_id  = self.player.connect('playing-song-changed', self.song_changed)
     self.pspc_id = self.player.connect('playing-song-property-changed', self.song_property_changed)
+    self.skypeEvent = False
     #gui
     self.dialog = None
     self.txFormat = None
@@ -55,17 +55,16 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
     self.loadConfig()
 
   def deactivate(self,shell):
-    if(self.old_mood_msg):
-      self.skype.SKSetMood(self.old_mood_msg)
-      self.old_mood_msg = None
-
+    self.skype.setMood(self.skype.getOldMood())
     if(self.skype): self.skype.unhook()
     if(self.player): self.player = None
     self.shell.get_player().disconnect (self.psc_id)
     self.shell.get_player().disconnect (self.pspc_id)
-    del self.old_mood_msg
+    self.shell.get_player().disconnect (self.pc_id)
+    del self.skypeEvent
     del self.pspc_id
     del self.psc_id
+    del self.pc_id
     del self.shell
     del self.player
     del self.skype
@@ -98,6 +97,20 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
       else :
         return 3
 
+  def got_ringHi(self) :
+    self.skypeEvent = True
+    self.player.pause()
+      
+  def got_ringLo(self) :
+    self.skypeEvent = True
+    self.player.play()
+      
+
+  def playing_changed(self, player, playing) :
+   db = self.shell.get_property('db')
+   entry = player.get_playing_entry()
+   self.gaat(db,entry)
+
 
   def song_changed(self, player, entry):
    db = self.shell.get_property('db')
@@ -109,25 +122,44 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
    entry = player.get_playing_entry()
    self.gaat(db,entry)
 
-
+  #get attributes and transform
   def gaat(self,db, entry):
     if db is None :
-      return None
+      return 
     if entry is None:
-      return None
-    if (self.old_mood_msg == None) : self.old_mood_msg = self.skype.SKGetMood()
-    stream_song_title = db.entry_request_extra_metadata(entry,STRM_SONG_TITLE)
-    if (stream_song_title) :
-      artist = db.entry_request_extra_metadata(entry,STRM_SONG_ARTIST)
-      album = db.entry_request_extra_metadata(entry,STRM_SONG_ALBUM)
-      title = stream_song_title
-    else:
-      artist = db.entry_get(entry, rhythmdb.PROP_ARTIST)
-      album = db.entry_get(entry, rhythmdb.PROP_ALBUM)
-      title = db.entry_get(entry, rhythmdb.PROP_TITLE)
-    stat = self.format_resp(artist, title, album)
-    self.skype.SKSetMood(stat)
-    return 1
+      return 
+
+    artist  = None
+    album   = None
+    title   = None
+    #experimental from :: Library - Radio
+    station = None
+
+    artist = db.entry_get(entry, rhythmdb.PROP_ARTIST)
+    album = db.entry_get(entry, rhythmdb.PROP_ALBUM)
+    title = db.entry_get(entry, rhythmdb.PROP_TITLE)
+
+
+    if (entry.get_entry_type().category == rhythmdb.ENTRY_STREAM) :
+      if artist is None :
+        artist = db.entry_request_extra_metadata(entry,STRM_SONG_ARTIST)
+      if album is None :
+        album  = db.entry_request_extra_metadata(entry,STRM_SONG_ALBUM)
+      if title is None :
+        title  = db.entry_request_extra_metadata(entry,STRM_SONG_TITLE)
+
+    formatted_mood = self.format_resp(artist, title, album)
+    if (self.skypeEvent and self.playerStatus() == 1 ) :
+      self.skype.fSetMood(formatted_mood)
+    elif not self.skypeEvent and self.playerStatus() == 2 :
+      self.skype.setMood(self.skype.getOldMood())
+    elif not self.skypeEvent and self.playerStatus() == 3 :
+      self.skype.setMood(self.pause_msg)
+    else :
+      self.skype.setMood(formatted_mood)
+    
+    self.skypeEvent = False
+    return 
 
 
   def format_resp(self, artist, title, album):
@@ -170,7 +202,7 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
       self.conf_client.set_string(CONF_KEY_PAUSE,CONF_VAL_DEFAULT_PAUSE)
       self.pause_msg = self.conf_client.get_string(CONF_KEY_PAUSE)
 
-    self.skype.pauseMessage = self.pause_msg
+
 
     #load listeners
     self.conf_client.notify_add(CONF_KEY_MOOD,self.newMoodSetup)
@@ -182,7 +214,7 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
 
   def newPauseSetup(self, client, *args, **kwargs):
     self.pause_msg = client.get_string(CONF_KEY_PAUSE)
-    self.skype.pauseMessage = self.pause_msg
+
 
   def saveConfigFromDialog(self,widget):
     self.conf_client.set_string(CONF_KEY_MOOD,self.txFormat.get_text())

@@ -111,6 +111,40 @@ iiping 18:22 :: ok thanks a bunch
 
 
 
+Code Result:
+//response
+//1 : play
+//2 : stop
+//3 : paused
+def isPaused():
+  if player.playing :
+    return 1
+  else : 
+    entry = player.get_playing_entry()
+    if entry is None :
+      return 2
+    else :
+      return 3
+
+
+
+After the response.. we can clearly differentiate stop and pause, also
+the stream and non-stream entry below, from rhythmbox-python-console
+
+>>> entry = player.get_playing_entry()
+>>> entrytype = entry.get_entry_type()
+>>> entrytype.category == rhythmdb.ENTRY_STREAM
+
+
+The question about consistency isn't really answered since there
+are different layout and formats from different radio stations.. 
+sometimes
+{TITLE} - {ARTIST} - {ALBUM}
+and
+{ARTIST} - {TITLE} - {ALBUM}
+
+
+
 So back on the drawing board and do FSM and references for the plug-in
 
 <scxml initial="stop"><!-- Simplified Rhythmbox Reference -->
@@ -158,6 +192,21 @@ So back on the drawing board and do FSM and references for the plug-in
     <transition event="skype.any" cond="CMD &eq FAILED" target="idle" />
   </state>
   <final id="exit" />
+</scxml>
+
+<!-- assumes we removed the hooked and unhooked states of dbus -->
+<scxml initial="on"><!-- Simplified Skype7Protocol-DBUS-Mediator Reference for 0.4 -->
+  <state id="on">
+    <transition event="sk_onSkypeOnOff" cond="self.skype_oncall and not self.isSkypeRunning()" />
+
+    <state id="onCall">
+    </state>
+    
+  </state>
+  <state id="off">
+    
+  </state>
+  <final id="unHooked" />
 </scxml>
 
 
@@ -217,25 +266,7 @@ So back on the drawing board and do FSM and references for the plug-in
 
 
 
-//routine 
-//1 : play
-//2 : stop
-//3 : paused
 
 
-def isPaused():
-  if player.playing :
-    return 1
-  else : 
-    entry = player.get_playing_entry()
-    if entry is None :
-      return 2
-    else :
-      return 3
-
-
->>> entry = player.get_playing_entry()
->>> entrytype = entry.get_entry_type()
->>> entrytype.category == rhythmdb.ENTRY_STREAM
 
 
