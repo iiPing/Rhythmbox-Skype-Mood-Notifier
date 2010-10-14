@@ -44,10 +44,6 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
     self.psc_id  = self.player.connect('playing-song-changed', self.song_changed)
     self.pspc_id = self.player.connect('playing-song-property-changed', self.song_property_changed)
     self.skypeEvent = False
-    self.hist_title = None
-    self.hist_album = None
-    self.hist_artist = None
-    self.hist_station = None
     self.hist_mood = None
     #gui
     self.dialog = None
@@ -62,15 +58,12 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
   def deactivate(self,shell):
     self.skype.setMood(self.skype.getOldMood())
     if(self.skype): self.skype.sk_unHooking()
+    self.skype.deref()
     if(self.player): self.player = None
 
     self.shell.get_player().disconnect (self.pspc_id)
     self.shell.get_player().disconnect (self.psc_id)
     self.shell.get_player().disconnect (self.pc_id)
-    self.hist_title = None
-    self.hist_album = None
-    self.hist_artist = None
-    self.hist_station = None
     self.hist_mood = None
     del self.skypeEvent
     del self.pspc_id
@@ -111,8 +104,10 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
     return retval
 
   def got_ringHi(self) :
+    # toggle pause here so that 
+    # it won't garbage in gaat inspection
+    self.player.pause() 
     self.skypeEvent = True
-    self.player.pause()
       
   def got_ringLo(self) :
     self.skypeEvent = False
@@ -122,23 +117,23 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
   def playing_changed(self, player, playing) :
    db = self.shell.get_property('db')
    entry = player.get_playing_entry()
-   print "from pc"
    self.gaat(db,entry)
 
 
   def song_changed(self, player, entry):
    db = self.shell.get_property('db')
-   print "from sc"
    self.gaat(db,entry)
 
 
   def song_property_changed(self, player, uri, prop, old_val, new_val):
    db = self.shell.get_property('db')
    entry = player.get_playing_entry()
-   print "from spc"
    self.gaat(db,entry)
 
-  #get attributes and transform
+  # Get Attributes And Transform
+  # a single point of entry where we manipulate 
+  # everything to simplify modifications in the 
+  # future
   def gaat(self,db, entry):
 
     if db is None :
@@ -166,29 +161,28 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
         title  = db.entry_request_extra_metadata(entry,STRM_SONG_TITLE)
 
 
-    #self.hist_title = title
-    #self.hist_artist = artist
-    #self.hist_album = album
-
     formatted_mood = self.format_resp(artist, title, album)
     if (station is not None) : formatted_mood = "%s :: %s" % (station,formatted_mood)
+
     if (self.skypeEvent and self.playerStatus() == 1 ) :
       self.skype.fSetMood(formatted_mood)
-      print "fSetMood %s %s" % (self.playerStatus(),formatted_mood)
       self.hist_mood = formatted_mood
-    else :
+      self.skypeEvent = False
+      return
 
-      if self.playerStatus() == 1 :
-        pass
-      if self.playerStatus() == 2 :
-        formatted_mood = self.skype.getOldMood()
-      elif self.playerStatus() == 3 :
-        formatted_mood = self.pause_msg
-      
-      if self.hist_mood is not formatted_mood :
-        self.skype.setMood(formatted_mood)
-        print "setMood %s %s" % (self.playerStatus(),formatted_mood)
-      self.hist_mood = formatted_mood
+
+    if self.playerStatus() == 1 :
+      pass
+    if self.playerStatus() == 2 :
+      formatted_mood = self.skype.getOldMood()
+    elif self.playerStatus() == 3 :
+      formatted_mood = self.pause_msg
+
+
+    if not (self.hist_mood == formatted_mood) :
+      self.skype.setMood(formatted_mood)
+
+    self.hist_mood = formatted_mood
 
     
     self.skypeEvent = False
@@ -214,12 +208,9 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
       self.txPause = gladexml.get_widget('txPause')
       
       if self.mood_msg is None :
-        print "wth!!! none mood"
-        #this should have been set when self.conf_client.set_string(CONF_KEY_MOOD,CONF_VAL_DEFAULT_MOOD)
         self.mood_msg = CONF_VAL_DEFAULT_MOOD
 
       if self.pause_msg is None :
-        print "wth!!! none pause" 
         self.mood_msg = CONF_VAL_DEFAULT_PAUSE    
 
       self.txFormat.set_text(self.mood_msg)

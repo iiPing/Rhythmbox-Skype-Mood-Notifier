@@ -83,30 +83,19 @@ the IRC hoping there will be a developer online so I started at #rhythmbox @ irc
 
 
 iiping 18:06 :: good day everyone.. is this the right room to ask questions on rb-plugin @python	
-
 moch 18:07 :: yes	
-
 iiping 18:11 :: can anybody tell me how to determine a pause state, the doc implies there are only 2 major states stop and play	
-
 moch 18:13 :: if there is a playing entry, but rb_shell_player_get_playing return false, it is paused	
-
 iiping 18:14 :: ok, but does it include also the stop state? what I mean is on docs http://library.gnome.org/devel/rhythmbox/unstable/RBShellPlayer.html property playing is boolean 
        18:15 :: so if a playlist literally end it stops right? but how do I really determine those 2 
        18:16 :: is there something like if *pointer == null on dbentries this is stop and if *pointer== somethingsomething it is paused? 
        18:17 :: in python? 
- 
 moch 18:18 :: if there is no playing entry, it is stopped	
-
 iiping 18:18 :: ah ok thanks	
-
 moch 18:19 :: http://git.gnome.org/browse/rhythmbox/tree/plugins/mpris/rb-mpris-plugin.c#n632	
-
 iiping 18:21 :: btw is it a good idea just to use the event/signal 'window-title-changed' so that I have only 1 entry point if the playlist did change entries... so that the plugin will be a little lightweight? On personal opinion?	
-
 moch 18:21 :: no, don't use that reducing the number of signal handlers you have does not make your plugin better or more efficient or anything 
-
 18:22	:: hadess has disconnected (Remote closed the connection) 
-
 iiping 18:22 :: ok thanks a bunch
 
 
@@ -117,7 +106,7 @@ Code Result:
 //2 : stop
 //3 : paused
 def isPaused():
-  if player.playing :
+  if player.props.playing :
     return 1
   else : 
     entry = player.get_playing_entry()
@@ -194,79 +183,4 @@ So back on the drawing board and do FSM and references for the plug-in
   <final id="exit" />
 </scxml>
 
-<!-- assumes we removed the hooked and unhooked states of dbus -->
-<scxml initial="on"><!-- Simplified Skype7Protocol-DBUS-Mediator Reference for 0.4 -->
-  <state id="on">
-    <transition event="sk_onSkypeOnOff" cond="self.skype_oncall and not self.isSkypeRunning()" />
-
-    <state id="onCall">
-    </state>
-    
-  </state>
-  <state id="off">
-    
-  </state>
-  <final id="unHooked" />
-</scxml>
-
-
-<scxml initial="init"><!-- SCXML Plugin -->
-  <state id="init>
-    <onenter>
-      oldMoodMsg = skype.getmood or None
-      pauseMoodMsg = gconf.db.pausemessage
-      currentMsg = ""
-    </onenter>
-    <transition target="wait.triggered.events" />
-  </state>
-  <state id="wait.triggered.events">
-    <transition event="player.signal" cond="signal &eq playing-song-changed"          target="skype.mood.updated" />
-    <transition event="player.signal" cond="signal &eq playing-changed"               target="skype.mood.updated" />
-    <transition event="player.signal" cond="signal &eq playing-song-property-changed" target="skype.mood.updated" />
-  </state>
-  <state id="skype.mood.updated">
-    <state id="paused">
-    </state>
-    <state id="stopped">
-    </state>
-    <state id="playing">
-    </state>
-    <transition target="wait.triggered.events" />
-  </state>
-  <final id="quit">
-    <onenter>
-    </onenter>
-  </final>
-</scxml>
-
-<scxml initial="loading"> <!-- rhythmbox skype mood notify target version 0.4 fsm -->
-  <state id="loading">
-    <transition target="configure" />
-  </state>
-  <state id="idle">
-    <transition event="skype.hooking-in"   target="configure" />
-    <transition event="skype.hooking-out"  target="configure" />
-    <transition event="skype.calling"      target="player.pause" />
-    <transition event="skype.goingidle"    target="player.play" />
-    <transition event="player.playing-song-changed"	target="configure" />
-    <transition event="player.playing-song-property-changed"	target="configure" />
-  </state>
-  <state id="player.pause">
-		<transition event="player.playing" target="player.play" />
-    <transition event="player.exit" target="player.exit" />
-  </state>
-  <state id="player.play">
-    <transition target="configure" />
-  </state>  
-  <state id="configure">
-    <transition target="idle"  />
-  </state>
-  <final id="exit" />
-</scxml>
-
-
-
-
-
-
-
+@TODO: Current FSM of version 0.4

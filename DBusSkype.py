@@ -55,7 +55,18 @@ class ExpObjSkypeListener(dbus.service.Object):
       self.cbMethod = None
       self.remove_from_connection()
 
+'''
+Running from command line
 
+from DBusSkype import *
+srm = SkypeRhythmboxMediator()
+srm.sk_hooking()
+srm.setMood('is that it')
+srm.sk_unHooking()
+srm.deref()
+del srm
+quit()
+'''
 class SkypeRhythmboxMediator():
   def __init__(self, ringHigh = None, ringLow = None):
     DBusGMainLoop(set_as_default=True)
@@ -107,7 +118,22 @@ class SkypeRhythmboxMediator():
     else :
       self.ringLow = ringLow
 
-
+  def deref(self):
+    self.ringLow = None
+    self.ringHigh = None
+    self.calls.clear()
+    self.users.clear()
+    del self.skypeEventListener
+    del self.users
+    del self.calls
+    del self.skype_fd 
+    del self.skype_protocolSupported
+    del self.hooked
+    del self.skype_on
+    del self.skype_connected
+    del self.skype_oncall
+    del self.ringHigh
+    del self.ringLow
 
 
   #routine for registering skype-dbus
