@@ -100,12 +100,12 @@ class SkypeRhythmboxMediator():
     if None is ringHigh :
       self.ringHigh   = self.ringHighDef
     else :
-      self.plungerUp   = plungerUp
+      self.ringHigh   = ringHigh
     #setup plunger (act as putting down the phone)
     if None is ringLow :
       self.ringLow = self.ringLowDef
     else :
-      self.ringLow = ringLowDef
+      self.ringLow = ringLow
 
 
 
@@ -254,11 +254,11 @@ class SkypeRhythmboxMediator():
     if len(self.calls) > 0 :
       if not self.skype_oncall :
         self.skype_oncall = True
-        self.plungerUp()
+        self.ringHigh()
     elif len(self.calls) == 0 :
       if self.skype_oncall :
         self.skype_oncall = False
-        self.plungerDown()
+        self.ringLow()
     gtk.gdk.threads_leave()
 
 
