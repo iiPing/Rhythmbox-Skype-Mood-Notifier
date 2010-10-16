@@ -18,9 +18,13 @@ Skype mood text (in artist - album - title format) from current playing song/mus
 Features
 --------
 v0.40
-- fix #0001 BlueB
+- fix longest running bug #0001 ItsBlueB
 - tested against ubuntu netbook 10.10
 - overhaul'ed SkypeRhythmboxMediator (spaghetti call)
+- added experimental radio station NOTE: you can change __init__.py line 160
+    if (station is not None) : formatted_mood = "%s :: %s" % (station,formatted_mood)
+  this will concatenate a some characters before the skype mood " [station-name] :: "
+
 
 v0.35
 - fix plugin version display

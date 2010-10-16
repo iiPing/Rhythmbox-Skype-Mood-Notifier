@@ -81,13 +81,8 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
     del self.mood_msg
     del self.pause_msg
 
-  #@deprecated v0.4 changed by playerStatus
-  def isPlayerPlaying(self):
-    player= self.shell.get_player()
-    if(player):
-      return player.props.playing
 
-  # routine 
+  # routine returns:
   # 1 : play
   # 2 : stop
   # 3 : paused
@@ -153,13 +148,20 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
     album  = db.entry_get(entry, rhythmdb.PROP_ALBUM)
     title  = db.entry_get(entry, rhythmdb.PROP_TITLE)
 
-
-    if (entry.get_entry_type().props.category == rhythmdb.ENTRY_STREAM) :
+    #TODO:find a nice solution to this one 
+    # quick and dirty hack for ubuntu 10.10 netbook
+    if hasattr(entry.get_entry_type(), 'props.category') :
+      if (entry.get_entry_type().props.category == rhythmdb.ENTRY_STREAM) :
         station = title
         artist = db.entry_request_extra_metadata(entry,STRM_SONG_ARTIST)
         album  = db.entry_request_extra_metadata(entry,STRM_SONG_ALBUM)
         title  = db.entry_request_extra_metadata(entry,STRM_SONG_TITLE)
-
+    else :
+      if (entry.get_entry_type().category == rhythmdb.ENTRY_STREAM) :
+        station = title
+        artist = db.entry_request_extra_metadata(entry,STRM_SONG_ARTIST)
+        album  = db.entry_request_extra_metadata(entry,STRM_SONG_ALBUM)
+        title  = db.entry_request_extra_metadata(entry,STRM_SONG_TITLE)
 
     formatted_mood = self.format_resp(artist, title, album)
     if (station is not None) : formatted_mood = "%s :: %s" % (station,formatted_mood)
@@ -191,6 +193,9 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
 
   def format_resp(self, artist, title, album):
     retval = Template(self.mood_msg)
+    if artist is None :  artist = ''
+    if title is None  :  title  = ''
+    if album is None  :  album  = ''
     return retval.substitute(TITLE=title, ARTIST=artist, ALBUM=album)
 
 
@@ -232,8 +237,6 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
       self.conf_client.add_dir(CONF_KEY_PAUSE,gconf.CLIENT_PRELOAD_NONE)
       self.conf_client.set_string(CONF_KEY_PAUSE,CONF_VAL_DEFAULT_PAUSE)
       self.pause_msg = self.conf_client.get_string(CONF_KEY_PAUSE)
-
-
 
     #load listeners
     self.conf_client.notify_add(CONF_KEY_MOOD,self.newMoodSetup)
