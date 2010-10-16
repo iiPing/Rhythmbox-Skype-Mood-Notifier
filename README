@@ -4,6 +4,9 @@ Contents:
   Compatibility List
   Installation
   Help
+  Bug / @Feature Request
+  Credits - Sys-Info
+  Credits - Developers
   Other Similar Plugin
   Other Rhythmbox Plugin
 
@@ -14,6 +17,11 @@ Skype mood text (in artist - album - title format) from current playing song/mus
 
 Features
 --------
+v0.40
+- fix #0001 BlueB
+- tested against ubuntu netbook 10.10
+- overhaul'ed SkypeRhythmboxMediator (spaghetti call)
+
 v0.35
 - fix plugin version display
 - added credits
@@ -35,22 +43,22 @@ v0.01
 
 Compatibility List
 ------------------
-Ubuntu 
-	09.04 x86 (32-64)
-	10.04 x86 (32-64) (beta & final)
+Ubuntu
+  09.04 x86 (32-64)
+  10.04 x86 (32-64) (beta & final)
   10.10 x86 (32)
 
 ArchLinux: 
-	Linux archcore 2.6.32-ARCH #1 SMP PREEMPT Tue Jan 19 06:08:04 UTC 2010 
+  Linux archcore 2.6.32-ARCH #1 SMP PREEMPT Tue Jan 19 06:08:04 UTC 2010 
 
 Rhythmbox version 
-  0.12.0 
-  0.12.6 
+  0.12.0
+  0.12.6
   0.12.8
 
 Skype (tm) version 
   2.1.0.47 (beta)
-	2.0.0.72 x86 (32-64) (beta)
+  2.0.0.72 x86 (32-64) (beta)
   2.1.0.81 x86 (32-64) (beta)
 
 
@@ -106,6 +114,7 @@ Seems to work just fine, except the status remains the same after the last song 
 
 
 Credits - Sys-Info
+--------
 ItsBlueB
 Tommaso Gardumi
 sakabatou
