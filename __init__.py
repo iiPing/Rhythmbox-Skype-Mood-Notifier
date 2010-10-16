@@ -154,7 +154,7 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
     title  = db.entry_get(entry, rhythmdb.PROP_TITLE)
 
 
-    if (entry.get_entry_type().category == rhythmdb.ENTRY_STREAM) :
+    if (entry.get_entry_type().props.category == rhythmdb.ENTRY_STREAM) :
         station = title
         artist = db.entry_request_extra_metadata(entry,STRM_SONG_ARTIST)
         album  = db.entry_request_extra_metadata(entry,STRM_SONG_ALBUM)
