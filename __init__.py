@@ -150,7 +150,7 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
 
     #TODO:find a nice solution to this one 
     # quick and dirty hack for ubuntu 10.10 netbook
-    if hasattr(entry.get_entry_type(), 'props.category') :
+    if hasattr(entry.get_entry_type(), 'props') :
       if (entry.get_entry_type().props.category == rhythmdb.ENTRY_STREAM) :
         station = title
         artist = db.entry_request_extra_metadata(entry,STRM_SONG_ARTIST)
