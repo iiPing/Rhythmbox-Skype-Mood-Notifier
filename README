@@ -47,6 +47,9 @@ v0.01
 
 Compatibility List
 ------------------
+openSUSE 
+  11.3 i686 (Linux 2.6.34.7-0.5-desktop #1 SMP PREEMPT i686 i686 i386 GNU/Linux)
+
 Ubuntu
   09.04 x86 (32-64)
   10.04 x86 (32-64) (beta & final)
@@ -130,7 +133,8 @@ Zero Zero
 Linda R. Shadow
 Marius Jigmond
 Carsten
-
+Marco
+Raul Libório http://rauhmaru.blogspot.com/
 
 
 Credits - Developers
