@@ -16,6 +16,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import cgi
 import gtk, gtk.glade, gconf
 import rhythmdb, rb
 from DBusSkype import SkypeRhythmboxMediator
@@ -108,6 +109,10 @@ class RhythmboxSkypeMoodNotifier(rb.Plugin):
     else:
       artist = db.entry_get(entry, rhythmdb.PROP_ARTIST)
       title = db.entry_get(entry, rhythmdb.PROP_TITLE)
+
+    artist = cgi.escape(artist)
+    title = cgi.escape(title)
+    
     stat = self.format_resp(artist,title)
     self.skype.SKSetMood(stat)
     return 1
