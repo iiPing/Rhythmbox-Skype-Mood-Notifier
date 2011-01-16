@@ -27,6 +27,16 @@ Skype mood text (in artist - album - title format) from current playing song/mus
 
 Features
 --------
+v0.45
+- fix issue 01 @github from Koze
+
+
+changelog:
+- cascaded the fix from issue 01 @github from Koze 
+  starting from v0.01 - current 
+  NOTICE: Please update your versions 
+
+
 v0.40
 - fix longest running bug #0001 ItsBlueB
 - tested against ubuntu netbook 10.10
@@ -145,6 +155,7 @@ Marius Jigmond
 Carsten
 Marco
 Raul Libório http://rauhmaru.blogspot.com/
+Koze
 
 
 Credits - Developers
