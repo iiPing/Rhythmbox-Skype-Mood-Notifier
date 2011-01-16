@@ -74,7 +74,7 @@
             <child>
               <widget class="GtkLabel" id="label2">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">v0.40</property>
+                <property name="label" translatable="yes">v0.45</property>
               </widget>
               <packing>
                 <property name="position">5</property>

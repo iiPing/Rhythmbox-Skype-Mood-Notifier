@@ -1,3 +1,5 @@
+
+
     """Print methods and doc strings.   
     Takes module, class, list, dictionary, or string."""
     methodList = [method for method in dir(object) if callable(getattr(object, method))]
